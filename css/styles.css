@@ -326,6 +326,64 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 }
 .collection-panel.is-open .collection-panel__grid { opacity: 1; transform: translateY(0); transition-delay: .15s; }
 
+/* ---------- Karussell (Bildband Möbelgruppen) ---------- */
+.carousel { position: relative; }
+
+.carousel__track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 6px;
+  scrollbar-width: none;                              /* Firefox: Scrollbar unsichtbar */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+.carousel__track::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+.carousel__item {
+  flex: 0 0 clamp(240px, 42vw, 340px);
+  scroll-snap-align: start;
+}
+
+/* Einheitliche Bildhöhe im Band (nur Karussell-Items – Panel- und Hero-Bilder unangetastet) */
+.carousel__item.product-media { aspect-ratio: 4 / 3; }
+.carousel__item img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Runder Pfeil-Button */
+.carousel__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--color-gold);
+  color: var(--color-text);
+  box-shadow: 0 4px 14px rgba(38,34,28,0.12);
+  z-index: 3;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .25s ease, color .25s ease;
+}
+.carousel__nav--prev { left: -23px; }
+.carousel__nav--next { right: -23px; }
+.carousel__nav:hover { background: var(--color-gold); color: #fff; }
+.carousel__nav[hidden],
+.carousel__nav:disabled { display: none; }
+.carousel__nav:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+
+/* Standardmäßig (Touch) ausgeblendet, nur bei Hover-fähigen Geräten eingeblendet */
+.carousel__nav { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .carousel__nav { display: flex; align-items: center; justify-content: center; }
+}
+
 /* ---------- Platzhalter-Kacheln (fehlende Fotos) ---------- */
 .placeholder-tile {
   aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center;
@@ -450,6 +508,7 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-media, .hero__word, .hero__subtitle, .hero__cta { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+  .carousel__track { scroll-behavior: auto; }
 }
 
 /* ---------- Responsive ---------- */
@@ -469,4 +528,5 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   .btn-row .btn { text-align: center; }
   .collection-toggle { padding: 20px; }
   .service-card { padding: 32px 26px; }
+  .carousel__item { flex-basis: 78vw; }
 }

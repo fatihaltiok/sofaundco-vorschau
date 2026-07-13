@@ -18,6 +18,7 @@
     initReveal();
     initLightbox();
     initCollectionToggles();
+    initCarousels();
     initVimeoClickToLoad();
     initHoverVideo();
   });
@@ -264,6 +265,43 @@
         video.classList.remove('is-active');
         video.pause();
       });
+    });
+  }
+
+  /* ---------- Karussells (seitlich wischbare Bildbänder) ----------
+     Horizontale Bildbahnen mit Pfeil-Navigation: prev/next-Buttons
+     scrollen den Track um ~85% der sichtbaren Breite; an den Rändern
+     wird der jeweilige Button über updateNav ausgeblendet.
+     Track fehlt -> Carousel wird übersprungen; fehlt ein Button, läuft
+     nur die andere Richtung (updateNav bleibt sicher). */
+  function initCarousels() {
+    var behavior = prefersReducedMotion ? 'auto' : 'smooth';
+
+    document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
+      var track = carousel.querySelector('[data-carousel-track]');
+      if (!track) return;
+      var prev = carousel.querySelector('[data-carousel-prev]');
+      var next = carousel.querySelector('[data-carousel-next]');
+
+      function updateNav() {
+        if (prev) prev.hidden = track.scrollLeft <= 2;
+        if (next) next.hidden = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+      }
+
+      if (prev) {
+        prev.addEventListener('click', function () {
+          track.scrollBy({ left: -Math.round(track.clientWidth * 0.85), behavior: behavior });
+        });
+      }
+      if (next) {
+        next.addEventListener('click', function () {
+          track.scrollBy({ left: Math.round(track.clientWidth * 0.85), behavior: behavior });
+        });
+      }
+
+      track.addEventListener('scroll', updateNav, { passive: true });
+      window.addEventListener('resize', updateNav);
+      updateNav();
     });
   }
 })();
