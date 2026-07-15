@@ -24,43 +24,56 @@
   });
 
   /* ---------- Hero-Video-Zyklus ----------
-     Bild ist immer sichtbar. Nach einer Pause blendet das Video ein,
-     spielt einmal komplett durch und blendet dann langsam zurück zum Bild.
-     Bei prefers-reduced-motion bleibt das Standbild stehen. */
+     Kurz nach dem Laden blendet das Video ein und spielt EINMAL komplett durch.
+     Währenddessen ist der "Sofa & Co"-Schriftzug ausgeblendet. Ist das Video
+     durchgelaufen, blendet es langsam zurück zum Standbild und der Schriftzug
+     erscheint — und beides bleibt ruhig stehen (kein erneuter Durchlauf).
+     Bei prefers-reduced-motion bleibt das Standbild mit Schriftzug von Anfang an. */
   function initHeroVideo() {
     var video = document.querySelector('[data-hero-video]');
     if (!video) return;
+    var content = document.querySelector('.hero__content');
 
     video.muted = true;
+    video.loop = false;
     video.pause();
 
-    // Reduced Motion: keinen automatischen Video-Zyklus starten.
+    // Reduced Motion: keinen Video-Zyklus starten, Schriftzug bleibt sichtbar.
     if (prefersReducedMotion) return;
 
-    var firstDelay = 5000;
-    var pauseBetween = 7000;
-    var timer = null;
+    // Vor dem ersten Durchlauf den Schriftzug ausblenden.
+    if (content) content.classList.add('is-hidden');
+
+    var firstDelay = 1200;
 
     function playVideo() {
       video.classList.remove('is-fading-out');
       video.classList.add('is-visible');
+      if (content) content.classList.add('is-hidden');
       try {
         video.currentTime = 0;
       } catch (e) { /* noop */ }
       var playPromise = video.play();
       if (playPromise && typeof playPromise.catch === 'function') {
-        playPromise.catch(function () { /* Autoplay evtl. blockiert — kein Fehler */ });
+        playPromise.catch(function () {
+          // Autoplay evtl. blockiert: Standbild + Schriftzug direkt zeigen.
+          video.classList.remove('is-visible');
+          if (content) content.classList.remove('is-hidden');
+        });
       }
     }
 
     function onEnded() {
+      // Video durchgelaufen: zurück zum Standbild, dann Schriftzug einblenden.
       video.classList.add('is-fading-out');
       video.classList.remove('is-visible');
-      timer = setTimeout(playVideo, pauseBetween);
+      setTimeout(function () {
+        if (content) content.classList.remove('is-hidden');
+      }, 900);
     }
 
     video.addEventListener('ended', onEnded);
-    timer = setTimeout(playVideo, firstDelay);
+    setTimeout(playVideo, firstDelay);
   }
 
   /* ---------- Reveal-on-Scroll ---------- */
