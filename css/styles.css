@@ -170,7 +170,10 @@ em { font-style: italic; }
 .hero__video.is-fading-out { transition-duration: 3s; }
 .hero__scrim {
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0) 55%, rgba(38,34,28,0.18));
+  /* Dezentes dunkles Band hinter dem Text (Mitte) für Lesbarkeit + sanfter Verlauf unten. */
+  background:
+    linear-gradient(180deg, rgba(38,34,28,0) 28%, rgba(38,34,28,0.26) 50%, rgba(38,34,28,0.26) 64%, rgba(38,34,28,0) 84%),
+    linear-gradient(180deg, rgba(255,255,255,0) 55%, rgba(38,34,28,0.18));
   pointer-events: none;
 }
 .hero__content {
