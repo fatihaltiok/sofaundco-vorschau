@@ -192,13 +192,15 @@ em { font-style: italic; }
   font-size: clamp(46px, 8vw, 124px);
   line-height: 1.04;
   letter-spacing: 0.02em;
-  color: var(--color-text);
+  color: #F6F0E4;
   display: flex; align-items: baseline; gap: 0.28em; justify-content: center; flex-wrap: wrap;
 }
 .hero__word { display: inline-block; opacity: 0; }
 .hero__word--left { animation: heroFromLeft 1.2s var(--ease) .2s forwards; }
 .hero__word--amp { font-weight: 300; animation: heroAmp .8s cubic-bezier(.34,1.4,.5,1) 1.15s forwards; }
 .hero__word--right { font-weight: 300; animation: heroFromRight 1.2s var(--ease) .2s forwards; }
+/* Helle Wörter (& Co) auf dem Foto-Hero lesbar halten. */
+.hero__word--amp, .hero__word--right { text-shadow: 0 2px 16px rgba(28,20,10,0.55); }
 .hero__gold {
   display: inline-block;
   background-image: linear-gradient(115deg,#8A6A2F 0%,#C9A24B 14%,#F3DFA0 27%,#B58A34 40%,#E8CC7E 52%,#9C7526 65%,#DDBB63 78%,#F0DA96 88%,#A37D2E 100%);
@@ -210,7 +212,7 @@ em { font-style: italic; }
 }
 .hero__subtitle {
   margin: 26px 0 0; font-size: 16px; line-height: 1.6; max-width: 640px;
-  letter-spacing: 0.02em; color: var(--color-muted);
+  letter-spacing: 0.02em; color: #EEE7D9; text-shadow: 0 1px 10px rgba(28,20,10,0.6);
   opacity: 0; animation: heroFadeIn 1s ease-out 1.7s forwards;
 }
 .hero__cta {
