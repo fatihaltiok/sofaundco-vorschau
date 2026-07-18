@@ -170,16 +170,17 @@ em { font-style: italic; }
 .hero__video.is-fading-out { transition-duration: 3s; }
 .hero__scrim {
   position: absolute; inset: 0;
-  /* Dezentes dunkles Band hinter dem Text (Mitte) für Lesbarkeit + sanfter Verlauf unten. */
+  /* Lesbarkeits-Verlauf unten links — das End-Standbild zeigt die Frau mittig-rechts,
+     ihr Gesicht bleibt frei; der Text sitzt im unteren Drittel links. */
   background:
-    linear-gradient(180deg, rgba(38,34,28,0) 28%, rgba(38,34,28,0.26) 50%, rgba(38,34,28,0.26) 64%, rgba(38,34,28,0) 84%),
-    linear-gradient(180deg, rgba(255,255,255,0) 55%, rgba(38,34,28,0.18));
+    linear-gradient(180deg, rgba(38,34,28,0) 48%, rgba(38,34,28,0.34) 82%, rgba(38,34,28,0.42) 100%),
+    linear-gradient(100deg, rgba(38,34,28,0.22) 0%, rgba(38,34,28,0) 55%);
   pointer-events: none;
 }
 .hero__content {
   position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  text-align: center; padding: 0 var(--pad-x); pointer-events: none;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+  text-align: left; padding: 0 var(--pad-x) clamp(44px, 9vh, 110px); pointer-events: none;
   transition: opacity 1.1s ease;
 }
 /* Während das Hero-Video läuft, ist der Schriftzug ausgeblendet; er erscheint,
@@ -193,7 +194,7 @@ em { font-style: italic; }
   line-height: 1.04;
   letter-spacing: 0.02em;
   color: #F6F0E4;
-  display: flex; align-items: baseline; gap: 0.28em; justify-content: center; flex-wrap: wrap;
+  display: flex; align-items: baseline; gap: 0.28em; justify-content: flex-start; flex-wrap: wrap;
 }
 .hero__word { display: inline-block; opacity: 0; }
 .hero__word--left { animation: heroFromLeft 1.2s var(--ease) .2s forwards; }
