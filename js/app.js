@@ -14,6 +14,7 @@
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   document.addEventListener('DOMContentLoaded', function () {
+    initMobileNav();
     initHeroVideo();
     initReveal();
     initLightbox();
@@ -22,6 +23,41 @@
     initVimeoClickToLoad();
     initHoverVideo();
   });
+
+  /* ---------- Mobile Navigation ---------- */
+  function initMobileNav() {
+    var header = document.querySelector('.header');
+    if (!header) return;
+    var toggle = header.querySelector('.nav-toggle');
+    var nav = header.querySelector('#site-nav');
+    if (!toggle || !nav) return;
+
+    function setOpen(isOpen) {
+      header.classList.toggle('is-open', isOpen);
+      nav.classList.toggle('is-open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggle.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+    }
+
+    toggle.addEventListener('click', function () {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () { setOpen(false); });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || toggle.getAttribute('aria-expanded') !== 'true') return;
+      setOpen(false);
+      toggle.focus();
+    });
+
+    document.addEventListener('click', function (e) {
+      if (toggle.getAttribute('aria-expanded') !== 'true' || header.contains(e.target)) return;
+      setOpen(false);
+    });
+  }
 
   /* ---------- Hero-Video-Zyklus ----------
      Kurz nach dem Laden blendet das Video ein und spielt EINMAL komplett durch.

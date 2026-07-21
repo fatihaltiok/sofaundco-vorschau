@@ -17,7 +17,12 @@
         <span class="brand__name">Sofa &amp; Co</span>
         <span class="brand__tag">Möbel mit Funktion</span>
       </div>
-      <nav class="nav">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menü öffnen">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+      <nav class="nav" id="site-nav">
         <a href="#kollektion" class="nav__link">Kollektion</a>
         <a href="#kff" class="nav__link">KFF</a>
         <a href="#services" class="nav__link">Leistungen</a>
@@ -60,22 +65,30 @@
       <p class="lede reveal">Sofas, Sessel, Schlafsofas und Liegen von brühl — jedes Modell wandelbar, jedes Detail konfigurierbar. Ein Überblick, bevor es ins Detail geht.</p>
       <div class="category-grid">
         <a class="category-card reveal" href="#piano">
-          <div class="placeholder-tile placeholder-tile--3-4">Foto folgt — Sofas</div>
+          <figure class="category-card__media">
+            <img src="assets/img/bruehl/piano/piano-large-ecksofas-13.jpg" alt="piano Sofa von brühl in hellem Wohnraum" loading="lazy">
+          </figure>
           <p class="category-card__eyebrow">Wohnzimmer</p>
           <p class="category-card__title">Sofas</p>
         </a>
-        <a class="category-card reveal" href="#roro-sessel">
-          <div class="placeholder-tile placeholder-tile--3-4">Foto folgt — Sessel</div>
+        <a class="category-card reveal" href="#roro">
+          <figure class="category-card__media">
+            <img src="assets/img/bruehl/roro/roro_medium-einzelsessel-01.jpg" alt="roro Einzelsessel von brühl" loading="lazy">
+          </figure>
           <p class="category-card__eyebrow">Lieblingsplatz</p>
           <p class="category-card__title">Sessel</p>
         </a>
         <a class="category-card reveal" href="#four-two">
-          <div class="placeholder-tile placeholder-tile--3-4">Foto folgt — Schlafsofas</div>
+          <figure class="category-card__media">
+            <img src="assets/img/bruehl/four-two/four_two_compact-schlafsofas-01.jpg" alt="four-two Schlafsofa von brühl" loading="lazy">
+          </figure>
           <p class="category-card__eyebrow">Gästezimmer</p>
           <p class="category-card__title">Schlafsofas</p>
         </a>
-        <a class="category-card reveal" href="#moule-large">
-          <div class="placeholder-tile placeholder-tile--3-4">Foto folgt — Liegen</div>
+        <a class="category-card reveal" href="#moule">
+          <figure class="category-card__media">
+            <img src="assets/img/bruehl/roro/roro-medium-soft-daybeds-24-1.jpg" alt="roro Daybed von brühl" loading="lazy">
+          </figure>
           <p class="category-card__eyebrow">Rückzugsort</p>
           <p class="category-card__title">Liegen &amp; Recamieren</p>
         </a>
