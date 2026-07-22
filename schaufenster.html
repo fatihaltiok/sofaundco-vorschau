@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sofa & Co — Schaufenster-Video (Vorschau)</title>
+<title>Sofa & Co — Schaufenster-Video (Vorschau, 2 Varianten)</title>
 <style>
   body{margin:0;background:#26221C;color:#F7F4EF;font-family:Georgia,serif;display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px}
-  h1{font-size:20px;font-weight:normal;letter-spacing:1px}
-  video{height:82vh;max-width:94vw;aspect-ratio:9/16;background:#000;box-shadow:0 12px 40px rgba(0,0,0,.5)}
-  p{font-size:14px;color:#CBC2B4;max-width:520px;text-align:center;line-height:1.5}
+  h1{font-size:20px;font-weight:normal;letter-spacing:1px;text-align:center}
+  .wrap{display:flex;gap:28px;flex-wrap:wrap;justify-content:center}
+  figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:10px}
+  video{height:76vh;max-width:44vw;aspect-ratio:9/16;background:#000;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+  figcaption{font-size:15px;color:#CBC2B4}
+  p{font-size:14px;color:#CBC2B4;max-width:640px;text-align:center;line-height:1.5}
+  @media (max-width:700px){ video{max-width:92vw;height:auto;width:92vw} }
 </style></head><body>
-<h1>Schaufenster-Video 1 — Dauerschleife (Hochformat)</h1>
-<video src="schaufenster-video1.mp4" autoplay loop muted playsinline controls></video>
-<p>So läuft das Video auf dem hochkant gestellten Display: Marken-Tafel → Skizze wird
-zum echten Wohnraum → zurück zur Tafel — nahtlose Endlosschleife, ohne Ton.</p>
+<h1>Schaufenster-Video — Layout nach Andreas Vorlage · zwei Schrift-Varianten</h1>
+<div class="wrap">
+  <figure><video src="schaufenster-video1-a.mp4" autoplay loop muted playsinline controls></video>
+  <figcaption>Variante A — „your style, your rooms" elegant-kursiv</figcaption></figure>
+  <figure><video src="schaufenster-video1-b.mp4" autoplay loop muted playsinline controls></video>
+  <figcaption>Variante B — handschriftlich (wie im Flyer)</figcaption></figure>
+</div>
+<p>Neu nach Andreas Feedback: Bilder-Karussell unter dem Video (Flur · Stuhl · Schlafzimmer ·
+Tisch · Wohnwand, wechselt alle ~10 s), darunter „Erwecken Sie Ihre Räume zum Leben —
+so individuell wie Ihre eigene Persönlichkeit", „Jetzt Wunschtermin vereinbaren" + Telefonnummer.
+Läuft als nahtlose Dauerschleife, ohne Ton.</p>
 </body></html>
