@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sofa &amp; Co. — Entwurf B · brühl Sofas Frankfurt</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Wandelbare brühl Sofas, KFF Sitzmöbel und persönliche Einrichtungsberatung in Frankfurt-Sachsenhausen. Mit Aufmaß, Planung, Lieferung und Montage.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FurnitureStore","name":"Sofa & Co.","description":"Persönliche Galerie für wandelbare Designmöbel in Frankfurt-Sachsenhausen: brühl Sofas, Funktionssofas, Schlafsofas und KFF Sitzmöbel mit Einrichtungsberatung, Aufmaß, Lieferung und Montage.","telephone":"+49 69 26098562","address":{"@type":"PostalAddress","streetAddress":"Schweizer Straße 90","postalCode":"60594","addressLocality":"Frankfurt am Main","addressRegion":"Hessen","addressCountry":"DE"},"areaServed":"Frankfurt am Main und Rhein-Main-Gebiet","openingHours":["Mo-Fr 12:00-18:00","Sa 10:30-15:30"],"brand":[{"@type":"Brand","name":"brühl"},{"@type":"Brand","name":"KFF"}]}
+</script>
+<style>
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/cormorant-garamond-normal-400.woff2') format('woff2');}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url('assets/fonts/cormorant-garamond-normal-500.woff2') format('woff2');}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url('assets/fonts/cormorant-garamond-normal-600.woff2') format('woff2');}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 600;font-stretch:100%;font-display:swap;src:url('assets/fonts/instrument-sans-400-600.woff2') format('woff2');}
+
+:root{--accent:#8A6A52;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:#F6F3EE;color:#23201B;font-family:'Instrument Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+a{color:var(--accent);}
+a:hover{color:#23201B;}
+::selection{background:#E6DACB;}
+
+/* Header */
+.site-header{transition:box-shadow .3s ease;}
+.site-header.is-scrolled{box-shadow:0 6px 24px rgba(35,32,27,.08);}
+.header-inner{max-width:1280px;margin:0 auto;padding:14px clamp(20px,4vw,48px);display:flex;align-items:center;gap:24px;flex-wrap:wrap;transition:padding .3s ease;}
+.site-header.is-scrolled .header-inner{padding-top:8px;padding-bottom:8px;}
+
+/* Hauptnavigation */
+.nav-link{font-size:14px;font-weight:500;color:#4A443C;text-decoration:none;position:relative;transition:color .3s ease;}
+.nav-link::after{content:"";position:absolute;left:0;bottom:-4px;height:1.5px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.22,.61,.36,1);}
+.nav-link:hover{color:var(--accent);}
+.nav-link:hover::after{transform:scaleX(1);}
+.nav-cta{font-size:14px;font-weight:600;padding:11px 22px;letter-spacing:0.02em;}
+
+/* Buttons */
+.btn{text-decoration:none;transition:background .25s ease,color .25s ease,transform .25s ease;}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{background:var(--accent);color:#FFFFFF;}
+.btn-primary:hover{background:#23201B;color:#FFFFFF;}
+.btn-outline{border:1px solid #23201B;color:#23201B;background:transparent;}
+.btn-outline:hover{background:#23201B;color:#F6F3EE;}
+.btn-light{background:#F1EBE1;color:#23201B;}
+.btn-light:hover{background:var(--accent);color:#FFFFFF;}
+
+/* Bild-Hover-Zoom */
+.media{overflow:hidden;}
+.media img,.media video{transition:transform .8s cubic-bezier(.22,.61,.36,1);}
+@media (hover:hover){
+  .media:hover img,.media:hover video{transform:scale(1.045);}
+}
+
+/* Pfeil-Links */
+.arr{display:inline-block;transition:transform .3s cubic-bezier(.22,.61,.36,1);}
+a:hover .arr{transform:translateX(4px);}
+
+/* Weitere Hover-Links */
+.tel-light{color:#F1EBE1;text-decoration:none;transition:color .25s ease;}
+.tel-light:hover{color:#C9A88C;}
+.foot-link{color:#C9BFAF;text-decoration:none;transition:color .25s ease;}
+.foot-link:hover{color:#F1EBE1;}
+.foot-muted{color:#8B8175;text-decoration:none;transition:color .25s ease;}
+.foot-muted:hover{color:#F1EBE1;}
+.klima-link{color:#2F3A34;text-decoration:none;border-bottom:1px solid #2F3A34;transition:color .25s ease,border-color .25s ease;}
+.klima-link:hover{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* Reveal-on-Scroll (nur mit JS) */
+.js-anim [data-reveal],
+.js-anim [data-stagger]{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);}
+.js-anim [data-reveal].is-visible,
+.js-anim [data-stagger].is-visible{opacity:1;transform:none;}
+
+/* Mobil */
+@media (max-width:900px){
+  .nav-extra{display:none;}
+}
+@media (max-width:560px){
+  .logo-sub{display:none;}
+  .nav-cta{padding:10px 16px;}
+}
+
+/* Reduzierte Bewegung */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
+  .js-anim [data-reveal],.js-anim [data-stagger]{opacity:1!important;transform:none!important;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header" style="position:sticky;top:0;z-index:50;background:rgba(246,243,238,0.94);backdrop-filter:blur(10px);border-bottom:1px solid #E3DCD1;">
+  <div class="header-inner">
+    <a href="#top" style="text-decoration:none;color:#23201B;display:flex;flex-direction:column;line-height:1;">
+      <span style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;">Sofa &amp; Co.</span>
+      <span class="logo-sub" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#8B8175;margin-top:5px;">Designmöbel-Galerie · Frankfurt</span>
+    </a>
+    <nav aria-label="Hauptnavigation" style="display:flex;align-items:center;gap:clamp(12px,1.8vw,24px);flex-wrap:wrap;margin-left:auto;">
+      <a class="nav-link" href="#sofas">Sofas</a>
+      <a class="nav-link nav-extra" href="#sitzmoebel">Sitzmöbel</a>
+      <a class="nav-link" href="#beratung">Beratung</a>
+      <a class="nav-link nav-extra" href="#referenz">Referenzen</a>
+      <a class="nav-link nav-extra" href="#wohnkomfort">Wohnkomfort</a>
+      <a class="nav-link nav-extra" href="#showroom">Showroom</a>
+      <a class="nav-link" href="#kontakt">Kontakt</a>
+      <a class="btn btn-primary nav-cta" href="#kontakt">Beratungstermin</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section style="border-bottom:1px solid #E3DCD1;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(44px,8vh,96px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(36px,5vw,80px);align-items:center;">
+    <div data-reveal>
+      <p style="margin:0 0 22px;font-size:12.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);font-weight:600;">Wandelbar · Persönlich geplant · Langlebig</p>
+      <h1 style="margin:0 0 24px;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(42px,5.4vw,74px);line-height:1.04;letter-spacing:-0.01em;text-wrap:balance;">Wandelbare Designmöbel für Räume, die mehr können</h1>
+      <p style="margin:0 0 32px;font-size:17px;line-height:1.65;color:#57503F;max-width:56ch;text-wrap:pretty;">Sofa &amp; Co. ist Ihre persönliche Designmöbel-Galerie in Frankfurt-Sachsenhausen. Wir planen wandelbare brühl Sofas und ausgewählte KFF Sitzmöbel individuell für Ihren Raum – langlebig, funktional und mit höchstem Qualitätsanspruch.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+        <a class="btn btn-primary" href="#kontakt" style="font-size:15px;font-weight:600;padding:15px 30px;letter-spacing:0.02em;">Beratungstermin vereinbaren</a>
+        <a class="btn btn-outline" href="#sofas" style="font-size:15px;font-weight:600;padding:14px 30px;letter-spacing:0.02em;">Kollektion entdecken</a>
+      </div>
+      <p style="margin:30px 0 0;font-size:13.5px;color:#6F675C;letter-spacing:0.03em;">Persönliche Beratung · Aufmaß vor Ort · Lieferung und Montage</p>
+      <p style="margin:8px 0 0;font-size:13.5px;color:#23201B;font-weight:500;letter-spacing:0.03em;">Schweizer Straße 90 · Frankfurt-Sachsenhausen</p>
+    </div>
+    <figure data-reveal style="margin:0;">
+      <video class="hero-media" src="assets/video/hero-roro-vr.mp4" poster="assets/img/hero-poster.jpg" autoplay muted playsinline preload="metadata" style="width:100%;height:clamp(340px,46vw,560px);object-fit:cover;display:block;background:#E6DFD3;"></video>
+      <figcaption style="margin-top:10px;font-size:12.5px;color:#8B8175;letter-spacing:0.04em;">brühl roro — vom Sofa zur Liegefläche in wenigen Handgriffen</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section style="background:#FFFFFF;border-bottom:1px solid #E3DCD1;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(52px,9vh,104px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(28px,4vw,56px);">
+    <div data-reveal data-stagger style="border-top:1px solid #23201B;padding-top:24px;">
+      <p style="margin:0 0 14px;font-size:12px;letter-spacing:0.18em;color:#8B8175;">01</p>
+      <h2 style="margin:0 0 12px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:29px;">Wandelbare Möbel</h2>
+      <p style="margin:0;font-size:15.5px;line-height:1.7;color:#57503F;text-wrap:pretty;">Designmöbel, die sich unterschiedlichen Wohnsituationen anpassen – vom aufrechten Sitzen über die Lounge-Position bis zur vollwertigen Liegefläche.</p>
+    </div>
+    <div data-reveal data-stagger style="border-top:1px solid #23201B;padding-top:24px;">
+      <p style="margin:0 0 14px;font-size:12px;letter-spacing:0.18em;color:#8B8175;">02</p>
+      <h2 style="margin:0 0 12px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:29px;">Persönliche Planung</h2>
+      <p style="margin:0;font-size:15.5px;line-height:1.7;color:#57503F;text-wrap:pretty;">Beratung, Konfiguration und Aufmaß vor Ort – abgestimmt auf Ihren Raum und Ihren Alltag, mit einem festen Ansprechpartner.</p>
+    </div>
+    <div data-reveal data-stagger style="border-top:1px solid #23201B;padding-top:24px;">
+      <p style="margin:0 0 14px;font-size:12px;letter-spacing:0.18em;color:#8B8175;">03</p>
+      <h2 style="margin:0 0 12px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:29px;">Für viele Jahre gedacht</h2>
+      <p style="margin:0;font-size:15.5px;line-height:1.7;color:#57503F;text-wrap:pretty;">Hochwertige Materialien, langlebige Konstruktionen und Bezüge, die sich abziehen, erneuern und austauschen lassen.</p>
+    </div>
+  </div>
+</section>
+
+<section id="sofas" style="border-bottom:1px solid #E3DCD1;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(52px,9vh,104px) clamp(20px,4vw,48px);">
+    <div data-reveal style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:clamp(20px,3vw,64px);align-items:end;margin-bottom:clamp(36px,5vh,64px);">
+      <div>
+        <p style="margin:0 0 16px;font-size:12.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);font-weight:600;">Ausgewählte Kollektionen</p>
+        <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,3.8vw,52px);line-height:1.08;text-wrap:balance;">Wenige Modelle, bewusst ausgewählt</h2>
+      </div>
+      <p style="margin:0;font-size:15.5px;line-height:1.7;color:#57503F;max-width:52ch;text-wrap:pretty;">Statt eines vollständigen Katalogs zeigen wir die Programme, die wir täglich planen und konfigurieren. Jedes Modell lässt sich im Showroom ausprobieren – und auf einer eigenen Seite im Detail entdecken.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(24px,3vw,40px);">
+      <article data-reveal data-stagger>
+        <a class="media" href="index.html#roro" style="text-decoration:none;color:#23201B;display:block;">
+          <img src="assets/img/bruehl/roro/roro-medium-classic-ecksofas-24-2.jpg" alt="brühl roro Ecksofa in klassischer Ausführung" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;">
+        </a>
+        <p style="margin:18px 0 6px;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:#8B8175;">brühl</p>
+        <h3 style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:27px;">roro</h3>
+        <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#57503F;text-wrap:pretty;">Der wandelbare Klassiker: Arm- und Rückenlehnen neigen sich stufenweise – vom Sofa zur Lounge bis zum vollwertigen Gästebett.</p>
+        <a href="index.html#roro" style="font-size:14px;font-weight:600;letter-spacing:0.04em;text-decoration:none;">Zum Modell <span class="arr">→</span></a>
+      </article>
+      <article data-reveal data-stagger>
+        <a class="media" href="index.html#moule" style="text-decoration:none;color:#23201B;display:block;">
+          <img src="assets/img/bruehl/moule/moule_extra_small-ecksofas-1.jpg" alt="brühl moule Ecksofa mit beweglichen Rückenlehnen" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;">
+        </a>
+        <p style="margin:18px 0 6px;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:#8B8175;">brühl</p>
+        <h3 style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:27px;">moule</h3>
+        <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#57503F;text-wrap:pretty;">Weiche, organische Form mit einzeln verstellbaren Drehsitzen – ein Sofa, das sich dem Gespräch, dem Lesen und dem Ausruhen anpasst.</p>
+        <a href="index.html#moule" style="font-size:14px;font-weight:600;letter-spacing:0.04em;text-decoration:none;">Zum Modell <span class="arr">→</span></a>
+      </article>
+      <article data-reveal data-stagger>
+        <a class="media" href="index.html#four-two" style="text-decoration:none;color:#23201B;display:block;">
+          <img src="assets/img/bruehl/four-two/four_two_compact-ecksofas-01.jpg" alt="brühl four-two Ecksofa, kompakt und wandelbar zum Doppelbett" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;">
+        </a>
+        <p style="margin:18px 0 6px;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:#8B8175;">brühl</p>
+        <h3 style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:27px;">four-two</h3>
+        <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#57503F;text-wrap:pretty;">Kompakte Ecklösung mit klarer Architektur – tagsüber Sofa mit Tischablage, abends ein bequemes Doppelbett.</p>
+        <a href="index.html#four-two" style="font-size:14px;font-weight:600;letter-spacing:0.04em;text-decoration:none;">Zum Modell <span class="arr">→</span></a>
+      </article>
+      <article data-reveal data-stagger>
+        <a class="media" href="index.html#alba" style="text-decoration:none;color:#23201B;display:block;">
+          <img src="assets/img/bruehl/alba/alba-ecksofas-01.jpg" alt="brühl alba Funktionssofa in hellem Loft-Wohnraum" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;">
+        </a>
+        <p style="margin:18px 0 6px;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:#8B8175;">brühl</p>
+        <h3 style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:27px;">Funktions- und Schlafsofas</h3>
+        <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#57503F;text-wrap:pretty;">Programme wie alba und piano für Räume mit mehreren Aufgaben – vom Arbeitszimmer bis zum Gästezimmer.</p>
+        <a href="index.html#alba" style="font-size:14px;font-weight:600;letter-spacing:0.04em;text-decoration:none;">Zur Übersicht <span class="arr">→</span></a>
+      </article>
+      <article id="sitzmoebel" data-reveal data-stagger>
+        <div class="media">
+          <img src="assets/img/kff/texas-stuhl/milieu-texas-chr-4f-ma-pol-35.jpg" alt="KFF TEXAS Stuhl in schwarzem Leder im Streiflicht" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;">
+        </div>
+        <p style="margin:18px 0 6px;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:#8B8175;">KFF</p>
+        <h3 style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:27px;">Stühle und Sessel</h3>
+        <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#57503F;text-wrap:pretty;">KFF Sitzmöbel ergänzen die Sofaprogramme – handwerklich gefertigt, langlebig gepolstert und in vielen Bezügen konfigurierbar.</p>
+        <a href="index.html#kff" style="font-size:14px;font-weight:600;letter-spacing:0.04em;text-decoration:none;">Zur Übersicht <span class="arr">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="beratung" style="background:#FFFFFF;border-bottom:1px solid #E3DCD1;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(52px,9vh,104px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(36px,5vw,80px);align-items:center;">
+    <figure data-reveal style="margin:0;">
+      <div class="media">
+        <img src="assets/img/bruehl/piano/piano-large-ecksofas-13.jpg" alt="brühl piano Ecksofa mit abgesenkten Rückenlehnen in einem großzügigen Wohnraum" loading="lazy" style="width:100%;height:clamp(320px,42vw,520px);object-fit:cover;display:block;">
+      </div>
+      <figcaption style="margin-top:10px;font-size:12.5px;color:#8B8175;letter-spacing:0.04em;">brühl piano — geplant für einen Raum, nicht für ein Schaufenster</figcaption>
+    </figure>
+    <div data-reveal>
+      <p style="margin:0 0 16px;font-size:12.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);font-weight:600;">Beratung statt Möbelverkauf</p>
+      <h2 style="margin:0 0 22px;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,3.6vw,48px);line-height:1.1;text-wrap:balance;">Ein Sofa beginnt nicht beim Modell, sondern bei Ihrem Raum</h2>
+      <p style="margin:0 0 18px;font-size:16px;line-height:1.7;color:#57503F;max-width:56ch;text-wrap:pretty;">Wir betrachten Raumgröße, Nutzung, gewünschte Funktionen, Materialien und persönliche Gewohnheiten. Daraus entsteht ein Möbel, das nicht nur gut aussieht, sondern langfristig zum Alltag passt.</p>
+      <p style="margin:0 0 28px;font-size:16px;line-height:1.7;color:#57503F;max-width:56ch;text-wrap:pretty;">Ob Altbau mit schmalem Treppenhaus oder offener Neubau-Grundriss: Wir messen vor Ort, konfigurieren gemeinsam und begleiten Sie bis zur fertigen Montage.</p>
+      <a class="btn btn-outline" href="#kontakt" style="font-size:15px;font-weight:600;padding:14px 30px;display:inline-block;letter-spacing:0.02em;">Beratungstermin vereinbaren</a>
+    </div>
+  </div>
+</section>
+
+<section style="border-bottom:1px solid #E3DCD1;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(52px,9vh,104px) clamp(20px,4vw,48px);">
+    <h2 data-reveal style="margin:0 0 clamp(32px,5vh,56px);font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,3.4vw,44px);text-wrap:balance;">So läuft die Planung ab</h2>
+    <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:clamp(24px,3vw,44px);">
+      <li data-reveal data-stagger style="border-top:1px solid #D8CFC2;padding-top:20px;">
+        <p style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--accent);">1</p>
+        <h3 style="margin:0 0 8px;font-size:17px;font-weight:600;">Kennenlernen und Bedarfsanalyse</h3>
+        <p style="margin:0;font-size:14.5px;line-height:1.65;color:#57503F;text-wrap:pretty;">Im Gespräch klären wir, wie Sie wohnen, wer das Möbel nutzt und welche Funktionen es übernehmen soll.</p>
+      </li>
+      <li data-reveal data-stagger style="border-top:1px solid #D8CFC2;padding-top:20px;">
+        <p style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--accent);">2</p>
+        <h3 style="margin:0 0 8px;font-size:17px;font-weight:600;">Auswahl und Konfiguration</h3>
+        <p style="margin:0;font-size:14.5px;line-height:1.65;color:#57503F;text-wrap:pretty;">Gemeinsam wählen wir Modell, Maße, Funktionen und Bezüge – abgestimmt auf Raum und Alltag.</p>
+      </li>
+      <li data-reveal data-stagger style="border-top:1px solid #D8CFC2;padding-top:20px;">
+        <p style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--accent);">3</p>
+        <h3 style="margin:0 0 8px;font-size:17px;font-weight:600;">Aufmaß und Planung</h3>
+        <p style="margin:0;font-size:14.5px;line-height:1.65;color:#57503F;text-wrap:pretty;">Wir messen bei Ihnen vor Ort und prüfen Stellflächen, Laufwege und Türbreiten, bevor bestellt wird.</p>
+      </li>
+      <li data-reveal data-stagger style="border-top:1px solid #D8CFC2;padding-top:20px;">
+        <p style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--accent);">4</p>
+        <h3 style="margin:0 0 8px;font-size:17px;font-weight:600;">Lieferung und Montage</h3>
+        <p style="margin:0;font-size:14.5px;line-height:1.65;color:#57503F;text-wrap:pretty;">Unser Team liefert, montiert fachgerecht und erklärt alle Funktionen direkt am Möbel.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="referenz" style="background:#FFFFFF;border-bottom:1px solid #E3DCD1;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(52px,9vh,104px) clamp(20px,4vw,48px);">
+    <p data-reveal style="margin:0 0 16px;font-size:12.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);font-weight:600;">Aus der Praxis</p>
+    <h2 data-reveal style="margin:0 0 clamp(32px,5vh,56px);font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,3.6vw,48px);line-height:1.1;max-width:24ch;text-wrap:balance;">Wandelbares Sofa für eine Frankfurter Altbauwohnung</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(36px,5vw,80px);align-items:start;">
+      <dl style="margin:0;">
+        <div data-stagger style="display:grid;grid-template-columns:minmax(150px,180px) 1fr;gap:16px;padding:18px 0;border-top:1px solid #E3DCD1;">
+          <dt style="font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;color:#8B8175;padding-top:3px;">Ausgangssituation</dt>
+          <dd style="margin:0;font-size:15.5px;line-height:1.65;color:#3A342B;text-wrap:pretty;">Ein Wohnzimmer im Sachsenhäuser Altbau: hohe Decken, schmaler Zuschnitt – und der Raum dient zugleich als Gästezimmer.</dd>
+        </div>
+        <div data-stagger style="display:grid;grid-template-columns:minmax(150px,180px) 1fr;gap:16px;padding:18px 0;border-top:1px solid #E3DCD1;">
+          <dt style="font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;color:#8B8175;padding-top:3px;">Herausforderung</dt>
+          <dd style="margin:0;font-size:15.5px;line-height:1.65;color:#3A342B;text-wrap:pretty;">Das Sofa musste an der kurzen Wand stehen, durfte den Weg zum Balkon nicht verstellen – und sollte Gästen ein vollwertiges Bett bieten.</dd>
+        </div>
+        <div data-stagger style="display:grid;grid-template-columns:minmax(150px,180px) 1fr;gap:16px;padding:18px 0;border-top:1px solid #E3DCD1;">
+          <dt style="font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;color:#8B8175;padding-top:3px;">Modell</dt>
+          <dd style="margin:0;font-size:15.5px;line-height:1.65;color:#3A342B;text-wrap:pretty;">brühl roro small, ausgewählt und probegesessen im Showroom auf der Schweizer Straße.</dd>
+        </div>
+        <div data-stagger style="display:grid;grid-template-columns:minmax(150px,180px) 1fr;gap:16px;padding:18px 0;border-top:1px solid #E3DCD1;">
+          <dt style="font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;color:#8B8175;padding-top:3px;">Anpassung</dt>
+          <dd style="margin:0;font-size:15.5px;line-height:1.65;color:#3A342B;text-wrap:pretty;">Maße nach Aufmaß festgelegt, strapazierfähiger abziehbarer Stoffbezug, Lehnenmechanik für die tägliche Verwandlung zur Liegefläche.</dd>
+        </div>
+        <div data-stagger style="display:grid;grid-template-columns:minmax(150px,180px) 1fr;gap:16px;padding:18px 0;border-top:1px solid #E3DCD1;border-bottom:1px solid #E3DCD1;">
+          <dt style="font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;color:#8B8175;padding-top:3px;">Ergebnis</dt>
+          <dd style="margin:0;font-size:15.5px;line-height:1.65;color:#3A342B;text-wrap:pretty;">Ein Sofa, das tagsüber kompakt an der Wand steht und abends in zwei Handgriffen zum Gästebett wird.</dd>
+        </div>
+        <p style="margin:24px 0 0;font-size:14.5px;color:#6F675C;">Weitere Projekte zeigen wir Ihnen gern im persönlichen Gespräch. <a href="#referenz" style="font-weight:600;">Referenzen ansehen <span class="arr">→</span></a></p>
+      </dl>
+      <figure data-reveal style="margin:0;">
+        <div class="media">
+          <img src="assets/img/bruehl/roro/roro-small-soft-ecksofas-24-1.jpg" alt="Kompaktes brühl roro small Sofa, passend für Altbauräume" loading="lazy" style="width:100%;height:clamp(320px,40vw,480px);object-fit:cover;display:block;">
+        </div>
+        <figcaption style="margin-top:10px;font-size:12.5px;color:#8B8175;letter-spacing:0.04em;">brühl roro small — kompakt im Stand, großzügig als Liegefläche</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="showroom" style="background:#23201B;color:#F1EBE1;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(52px,9vh,104px) clamp(20px,4vw,48px);">
+    <p data-reveal style="margin:0 0 16px;font-size:12.5px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A88C;font-weight:600;">Showroom Frankfurt-Sachsenhausen</p>
+    <h2 data-reveal style="margin:0 0 clamp(32px,5vh,56px);font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,3.6vw,48px);line-height:1.12;max-width:26ch;text-wrap:balance;">Design erleben, Funktionen ausprobieren, persönlich beraten lassen</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(36px,5vw,80px);align-items:center;">
+      <div data-reveal>
+        <p style="margin:0 0 30px;font-size:16px;line-height:1.7;color:#CFC6B8;max-width:54ch;text-wrap:pretty;">Ausgewählte Modelle von brühl und KFF stehen bei uns auf der Schweizer Straße bereit – zum Probesitzen, Umbauen und Vergleichen von Materialien und Bezügen.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:26px;margin-bottom:34px;">
+          <div style="border-top:1px solid #4A443C;padding-top:16px;">
+            <h3 style="margin:0 0 8px;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#8B8175;font-weight:600;">Adresse</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;">Schweizer Straße 90<br>60594 Frankfurt am Main</p>
+          </div>
+          <div style="border-top:1px solid #4A443C;padding-top:16px;">
+            <h3 style="margin:0 0 8px;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#8B8175;font-weight:600;">Öffnungszeiten</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;">Mo–Fr 12:00–18:00<br>Sa 10:30–15:30<br>sowie nach Vereinbarung</p>
+          </div>
+          <div style="border-top:1px solid #4A443C;padding-top:16px;">
+            <h3 style="margin:0 0 8px;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#8B8175;font-weight:600;">Kontakt</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;"><a class="tel-light" href="tel:+496926098562">069 26 09 85 62</a></p>
+          </div>
+        </div>
+        <a class="btn btn-light" href="#kontakt" style="font-size:15px;font-weight:600;padding:15px 30px;display:inline-block;letter-spacing:0.02em;">Termin im Showroom vereinbaren</a>
+      </div>
+      <figure data-reveal style="margin:0;">
+        <div style="width:100%;aspect-ratio:4/3;background:#2C2822;border:1px solid #4A443C;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:28px;color:#8B8175;">Sofa &amp; Co.</span>
+          <span style="margin-top:10px;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#8B8175;">Foto folgt</span>
+        </div>
+        <figcaption style="margin-top:10px;font-size:12.5px;color:#8B8175;letter-spacing:0.04em;">Die Galerie auf der Schweizer Straße</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="wohnkomfort" style="background:#E9ECEA;border-bottom:1px solid #D5DAD6;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(44px,7vh,80px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(32px,4vw,72px);align-items:center;">
+    <div data-reveal>
+      <p style="margin:0 0 14px;font-size:12.5px;letter-spacing:0.18em;text-transform:uppercase;color:#5E6B64;font-weight:600;">Ergänzendes Angebot</p>
+      <h2 style="margin:0 0 18px;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,3.2vw,42px);line-height:1.1;text-wrap:balance;">Wohnkomfort zu Ende gedacht</h2>
+      <p style="margin:0 0 24px;font-size:15.5px;line-height:1.7;color:#48524C;max-width:56ch;text-wrap:pretty;">Ausgewählte Design-Klimaanlagen verbinden angenehme Raumtemperaturen mit einer Gestaltung, die sich auch in hochwertige Wohnräume einfügt. Wir beraten, planen und montieren – wie bei unseren Möbeln.</p>
+      <a class="klima-link" href="index.html#klima" style="font-size:15px;font-weight:600;letter-spacing:0.03em;padding-bottom:3px;">Design-Klimaanlagen entdecken <span class="arr">→</span></a>
+    </div>
+    <div data-reveal class="media" style="width:100%;aspect-ratio:16/10;">
+      <img src="assets/img/klima/daikin/emura3/emura3_Installation_Picture14.jpg" alt="Daikin Emura 3 in Mattschwarz in einem modernen Wohnzimmer" loading="lazy" style="width:100%;aspect-ratio:16/10;object-fit:cover;display:block;">
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" style="border-bottom:1px solid #E3DCD1;">
+  <div data-reveal style="max-width:820px;margin:0 auto;padding:clamp(64px,11vh,128px) clamp(20px,4vw,48px);text-align:center;">
+    <h2 style="margin:0 0 20px;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(36px,4.6vw,60px);line-height:1.06;text-wrap:balance;">Welches Sofa passt wirklich zu Ihrem Raum?</h2>
+    <p style="margin:0 auto 34px;font-size:16.5px;line-height:1.7;color:#57503F;max-width:52ch;text-wrap:pretty;">Erzählen Sie uns von Ihrem Raum. Wir nehmen uns Zeit für eine persönliche Beratung – im Showroom auf der Schweizer Straße oder bei Ihnen zu Hause.</p>
+    <a class="btn btn-primary" href="tel:+496926098562" style="font-size:16px;font-weight:600;padding:17px 36px;display:inline-block;letter-spacing:0.02em;">Persönliche Beratung vereinbaren</a>
+    <p style="margin:26px 0 0;font-size:14px;color:#6F675C;letter-spacing:0.03em;">069 26 09 85 62 · Schweizer Straße 90, 60594 Frankfurt am Main</p>
+  </div>
+</section>
+
+</main>
+
+<footer style="background:#23201B;color:#C9BFAF;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,7vh,80px) clamp(20px,4vw,48px) 32px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:clamp(28px,4vw,56px);padding-bottom:44px;border-bottom:1px solid #3A342B;">
+      <div>
+        <p style="margin:0 0 6px;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:#F1EBE1;">Sofa &amp; Co.</p>
+        <p style="margin:0 0 16px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#8B8175;">Designmöbel-Galerie · Frankfurt</p>
+        <p style="margin:0;font-size:14px;line-height:1.7;text-wrap:pretty;">brühl Sofas, Funktionssofas, Schlafsofas und KFF Sitzmöbel in Frankfurt-Sachsenhausen – mit persönlicher Einrichtungsberatung, Aufmaß, Lieferung und Montage im Rhein-Main-Gebiet.</p>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#8B8175;font-weight:600;">Kontakt</h3>
+        <p style="margin:0 0 10px;font-size:14.5px;line-height:1.7;">Schweizer Straße 90<br>60594 Frankfurt am Main</p>
+        <p style="margin:0;font-size:14.5px;"><a class="foot-link" href="tel:+496926098562" style="font-size:14.5px;">069 26 09 85 62</a></p>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#8B8175;font-weight:600;">Öffnungszeiten</h3>
+        <p style="margin:0;font-size:14.5px;line-height:1.9;">Mo–Fr 12:00–18:00<br>Sa 10:30–15:30<br>sowie nach Vereinbarung</p>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#8B8175;font-weight:600;">Seiten</h3>
+        <nav aria-label="Footer-Navigation" style="display:grid;gap:9px;">
+          <a class="foot-link" href="index.html#kollektion" style="font-size:14.5px;">brühl Sofas Frankfurt</a>
+          <a class="foot-link" href="index.html#alba" style="font-size:14.5px;">Funktionssofas</a>
+          <a class="foot-link" href="index.html#four-two" style="font-size:14.5px;">Schlafsofas</a>
+          <a class="foot-link" href="index.html#kff" style="font-size:14.5px;">KFF Stühle und Sessel</a>
+          <a class="foot-link" href="#beratung" style="font-size:14.5px;">Einrichtungsberatung</a>
+          <a class="foot-link" href="index.html#klima" style="font-size:14.5px;">Design-Klimaanlagen</a>
+          <a class="foot-link" href="#showroom" style="font-size:14.5px;">Showroom</a>
+          <a class="foot-link" href="#referenz" style="font-size:14.5px;">Referenzen</a>
+          <a class="foot-link" href="index.html#marke" style="font-size:14.5px;">Über uns</a>
+          <a class="foot-link" href="#kontakt" style="font-size:14.5px;">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;padding-top:24px;">
+      <p style="margin:0;font-size:13px;color:#8B8175;">© 2026 Sofa &amp; Co. · Frankfurt am Main</p>
+      <div style="display:flex;gap:22px;">
+        <a class="foot-muted" href="impressum.html" style="font-size:13px;">Impressum</a>
+        <a class="foot-muted" href="datenschutz.html" style="font-size:13px;">Datenschutz</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  root.classList.add('js-anim');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Hero-Video: bei reduzierter Bewegung nur das Poster zeigen */
+  var heroVideo=document.querySelector('.hero-media');
+  if(heroVideo&&reduce){
+    heroVideo.removeAttribute('autoplay');
+    heroVideo.load();
+  }
+
+  var targets=Array.prototype.slice.call(document.querySelectorAll('[data-reveal],[data-stagger]'));
+
+  /* Stagger: transition-delay pro Container, 90 ms pro Kind */
+  var groups=new Map();
+  Array.prototype.forEach.call(document.querySelectorAll('[data-stagger]'),function(el){
+    var p=el.parentElement;
+    if(!groups.has(p)) groups.set(p,[]);
+    groups.get(p).push(el);
+  });
+  groups.forEach(function(arr){
+    arr.forEach(function(el,i){ el.style.transitionDelay=(i*90)+'ms'; });
+  });
+
+  function revealAll(){ targets.forEach(function(el){ el.classList.add('is-visible'); }); }
+
+  if(reduce||!('IntersectionObserver' in window)){
+    revealAll();
+    return;
+  }
+
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+  targets.forEach(function(t){ io.observe(t); });
+
+  /* Fallback: nach 4 s alles sichtbar */
+  setTimeout(revealAll,4000);
+
+  /* Header: Schatten + engeres Padding beim Scrollen */
+  var header=document.querySelector('.site-header');
+  if(header){
+    var onScroll=function(){ header.classList.toggle('is-scrolled',window.scrollY>10); };
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
+  }
+})();
+</script>
+
+</body>
+</html>
