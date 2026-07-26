@@ -70,6 +70,13 @@
     if (!video) return;
     var content = document.querySelector('.hero__content');
 
+    // Schmale Bildschirme bekommen die Hochkant-Fassung (9:16) des Hero-Videos.
+    var mobilSrc = video.getAttribute('data-src-mobil');
+    if (mobilSrc && window.matchMedia('(max-width: 980px)').matches) {
+      video.src = mobilSrc;
+      video.load();
+    }
+
     video.muted = true;
     video.loop = false;
     video.pause();

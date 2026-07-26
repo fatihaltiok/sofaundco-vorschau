@@ -39,8 +39,11 @@
     <!-- ============ HERO ============ -->
     <section class="hero">
       <div class="hero__media">
-        <img class="hero__img" src="assets/img/hero-poster.jpg" alt="Wohnraum mit brühl roro-Sofa — von der Skizze zur Realität">
-        <video class="hero__video" data-hero-video src="assets/video/hero-roro-vr.mp4" muted playsinline preload="auto"></video>
+        <picture>
+          <source media="(max-width: 980px)" srcset="assets/img/hero-poster-mobil.jpg">
+          <img class="hero__img" src="assets/img/hero-poster.jpg" alt="Wohnraum mit brühl roro-Sofa — von der Skizze zur Realität">
+        </picture>
+        <video class="hero__video" data-hero-video data-src-mobil="assets/video/hero-roro-vr-mobil.mp4" src="assets/video/hero-roro-vr.mp4" muted playsinline preload="auto"></video>
       </div>
       <div class="hero__scrim"></div>
       <div class="hero__content">

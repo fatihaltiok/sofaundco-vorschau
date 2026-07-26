@@ -532,6 +532,11 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 /* ---------- Responsive ---------- */
 @media (max-width: 980px) {
   :root { --pad-section: 76px; --pad-x: 26px; --gap-lg: 40px; }
+  /* Hero mobil: kompakter Schriftzug unten, damit das Wandtattoo im
+     Hochkant-Video frei bleibt (der lange Untertitel entfällt hier). */
+  .hero__title { font-size: clamp(40px, 11vw, 56px); }
+  .hero__subtitle { display: none; }
+  .hero__content { padding-bottom: clamp(32px, 6vh, 64px); }
   .header__inner { height: 64px; padding: 0 var(--pad-x); gap: 20px; }
   .nav-toggle {
     width: 44px; height: 44px; margin-left: auto; padding: 10px; border: 0;
