@@ -581,3 +581,11 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   .service-card { padding: 32px 26px; }
   .carousel__item { flex-basis: 78vw; }
 }
+
+/* Mitsubishi Diamond-Serie */
+.klima-ambient { max-width: 960px; margin: 0 auto 40px; background: var(--color-soft); }
+.klima-ambient video { width: 100%; height: auto; display: block; }
+.klima-mitsubishi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 980px) {
+  .klima-mitsubishi-grid { grid-template-columns: 1fr; }
+}

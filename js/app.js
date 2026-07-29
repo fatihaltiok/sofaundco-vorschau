@@ -22,6 +22,7 @@
     initCarousels();
     initVimeoClickToLoad();
     initHoverVideo();
+    initAmbientVideos();
   });
 
   /* ---------- Mobile Navigation ---------- */
@@ -330,6 +331,32 @@
      wird der jeweilige Button über updateNav ausgeblendet.
      Track fehlt -> Carousel wird übersprungen; fehlt ein Button, läuft
      nur die andere Richtung (updateNav bleibt sicher). */
+  /* Ambient-Videos (z. B. Mitsubishi-Klima) laden erst, wenn ihre Sektion in
+     Sichtweite scrollt — data-src wird dann zu src, danach Autoplay im Loop. */
+  function initAmbientVideos() {
+    var videos = document.querySelectorAll('.klima-ambient video[data-src]');
+    if (!videos.length) return;
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      // Poster genügt; ohne Observer kein Nachladen großer Videos.
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var video = entry.target;
+        if (entry.isIntersecting) {
+          if (!video.src) {
+            video.src = video.getAttribute('data-src');
+            video.load();
+          }
+          video.play().catch(function () {});
+        } else if (video.src) {
+          video.pause();
+        }
+      });
+    }, { rootMargin: '300px 0px' });
+    videos.forEach(function (v) { io.observe(v); });
+  }
+
   function initCarousels() {
     var behavior = prefersReducedMotion ? 'auto' : 'smooth';
 
