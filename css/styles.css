@@ -589,3 +589,43 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 @media (max-width: 980px) {
   .klima-mitsubishi-grid { grid-template-columns: 1fr; }
 }
+
+/* ---------- Kollektion: 6er-Kachelraster (Desktop sauber 3×2) ---------- */
+/* auto-fit ergibt bei voller Breite 5 Spalten (5+1) – ab Desktop erzwingen wir 3,
+   damit sechs Kacheln als 3×2 laufen. Darunter greift wieder auto-fit (2-/1-spaltig). */
+@media (min-width: 1000px) {
+  .category-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---------- Kachel-Platzhalter (Sortiment ohne Foto) ---------- */
+.category-card__media--placeholder {
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(165deg, #F7F4EF, #ECE6DB);
+  border: 1px solid rgba(154,123,79,0.22);
+}
+.category-card__placeholder-note {
+  font-family: var(--font-serif); font-style: italic; font-size: 15px;
+  letter-spacing: 0.02em; color: var(--color-muted);
+}
+
+/* ---------- Story-Platzhalter (Schreiner-Werkstatt) ---------- */
+.story-placeholder {
+  max-width: 560px; margin: 0 auto; padding: 44px 32px;
+  background: #fff; border: 1px solid rgba(154,123,79,0.25);
+  text-align: center;
+}
+.story-placeholder__hint {
+  margin: 0; font-family: var(--font-serif); font-style: italic;
+  font-size: 20px; line-height: 1.5; color: var(--color-muted);
+}
+
+/* ---------- Badge („Bald bei uns") ---------- */
+.badge {
+  display: inline-block; padding: 7px 18px;
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--color-gold); border: 1px solid rgba(154,123,79,0.4);
+  background: rgba(154,123,79,0.06);
+}
+
+/* ---------- Kompakte Sektion (weniger Höhe, z. B. Teaser) ---------- */
+.section--compact { padding-top: 76px; padding-bottom: 76px; }
