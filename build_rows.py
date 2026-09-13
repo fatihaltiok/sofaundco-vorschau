@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-build_rows.py — Baut die vier brühl-Reihen piano, roro, moule, four-two
-in index.html nach dem alba-Muster auf.
+build_rows.py — Baut die brühl-Reihen piano, roro, moule, four-two, alba
+in index.html als Wisch-Band (Karussell + „Alle N Ansichten"-Aufklapper).
 
 Vorgehen pro Reihe:
   1. Bilddateien aus assets/img/bruehl/<reihe>/ einlesen (sorted).
@@ -23,6 +23,7 @@ IMG_ROOT = os.path.join(BASE, "assets", "img", "bruehl")
 INDEX = os.path.join(BASE, "index.html")
 
 IMG_EXT = (".jpg", ".jpeg", ".png", ".webp")
+CURATED_MAX = 8
 
 # Anzeigereihenfolge der Gruppen; leere Gruppen werden weggelassen.
 GROUP_ORDER = [
@@ -58,6 +59,7 @@ ROWS_CFG = {
         ],
         "cta": "Im Showroom probeliegen",
         "hero_alt": "piano von brühl als Ecksofa",
+        "config_note": "Das Modell piano kannst du individuell konfigurieren — ob große oder abklappbare Lehnen, das bestimmst du.",
         "vimeo": {
             "id": "1156809923",
             "hash": "78051002ef",
@@ -114,6 +116,25 @@ ROWS_CFG = {
             "caption": "four-two in Bewegung — Ecksofa, Lounge und Doppelbett",
         },
     },
+    "alba": {
+        "eyebrow": "Wandelbare Funktionsmöbel",
+        "h2": "alba",
+        "designer": "Design Roland Meyer-Brühl",
+        "body": [
+            '<p class="body-text reveal" style="font-family:var(--font-serif);font-size:20px;font-style:italic;line-height:1.5">„Wo jedes Sofa mehr kann, als nur schön zu sein."</p>',
+            '<p class="body-text reveal">alba gehört zur brühl-Familie der wandelbaren Funktionsmöbel: klare Linien, verstellbare Lehnen und dieselbe leichtgängige Verwandlung vom Sitzen zum Liegen. Als Sofa, Ecksofa oder Einzelsessel — abziehbare, erneuerbare Bezüge inklusive.</p>',
+        ],
+        "cta": "Im Showroom entdecken",
+        "hero_alt": "alba von brühl als großzügiges Ecksofa in hellem Loft-Wohnraum",
+        "soft": True,
+        "vimeo": {
+            "id": "724486738",
+            "hash": "284a3b3342",
+            "ratio": "21/9",
+            "title": "alba — Design Roland Meyer-Brühl",
+            "caption": "alba in Bewegung — wandelbares Funktionsmöbel",
+        },
+    },
 }
 
 
@@ -167,74 +188,99 @@ def img_path(row, filename):
     return "assets/img/bruehl/{}/{}".format(row, filename)
 
 
-def accordion_block(row, group, files):
-    """> 4 Bilder -> eingeklapptes Akkordeon."""
+def pick_curated(files):
+    """Gleichmäßig gestreute Auswahl von bis zu CURATED_MAX Dateien."""
     n = len(files)
+    if n <= CURATED_MAX:
+        return list(files)
+    indices = []
+    seen = set()
+    for i in range(CURATED_MAX):
+        idx = round(i * (n - 1) / (CURATED_MAX - 1))
+        if idx not in seen:
+            seen.add(idx)
+            indices.append(idx)
+    return [files[i] for i in indices]
+
+
+def collection_block(row, group, files, soft=False):
+    """Karussell mit kuratierten Bildern + aufklappbares Panel mit allen Bildern.
+
+    soft=True fügt den figuren die Klasse 'product-media--on-soft' hinzu
+    (für helle Hintergründe); ohne soft bleibt die Ausgabe unverändert.
+    """
+    on_soft = "product-media--on-soft " if soft else ""
+    curated = pick_curated(files)
+    n = len(files)
+    singular = SINGULAR[group]
     panel_id = "panel-{}-{}".format(row, slug(group))
-    title = "Kollektion {0} — {1}".format(row, group)
-    singular = SINGULAR[group]
+    title = "Alle Ansichten — {0} {1}".format(row, group)
+    idx_of = {f: i for i, f in enumerate(files)}
     L = []
-    L.append(
-        '      <button type="button" class="collection-toggle reveal" '
-        'data-collection-toggle aria-expanded="false" '
-        'aria-controls="{pid}" data-label-open="Ausblenden" '
-        'data-label-closed="{n} Ansichten anzeigen" style="margin-top:20px">'.format(
-            pid=panel_id, n=n
-        )
-    )
-    L.append('        <span class="collection-toggle__label">')
-    L.append('          <span class="collection-toggle__title">{}</span>'.format(title))
-    L.append(
-        '          <span class="collection-toggle__count" '
-        'data-collection-count>{} Ansichten anzeigen</span>'.format(n)
-    )
-    L.append('        </span>')
-    L.append('        <span class="collection-toggle__chevron" aria-hidden="true">⌄</span>')
-    L.append('      </button>')
-    L.append(
-        '      <div class="collection-panel" id="{pid}" inert aria-hidden="true">'.format(pid=panel_id)
-    )
-    L.append('        <div class="collection-panel__inner">')
-    L.append('          <div class="collection-panel__grid">')
-    for i, f in enumerate(files, 1):
-        alt = "{0} {1} von brühl, Ansicht {2}".format(row, singular, i)
-        L.append('            <figure class="product-media gallery-item" data-hover-video="">')
-        L.append('              <img src="{src}" alt="{alt}" loading="lazy">'.format(
-            src=img_path(row, f), alt=alt))
-        L.append('            </figure>')
-    L.append('          </div>')
-    L.append('        </div>')
-    L.append('      </div>')
-    return "\n".join(L)
-
-
-def grid_block(row, group, files):
-    """<= 4 Bilder -> direktes Raster mit Überschrift."""
-    singular = SINGULAR[group]
-    L = []
-    L.append('      <div style="margin-top:56px">')
+    L.append('      <div class="model-collection" style="margin-top:56px">')
     L.append('        <p class="eyebrow reveal" style="text-align:center">{0} · {1}</p>'.format(row, group))
     L.append(
         '        <h3 class="heading reveal" '
         'style="text-align:center;font-size:clamp(28px,3vw,40px);'
-        'margin-bottom:24px">{}</h3>'.format(group)
+        'margin-bottom:24px">{0}</h3>'.format(group)
     )
-    L.append('        <div class="gallery-grid">')
-    for i, f in enumerate(files, 1):
+    L.append('')
+    L.append('        <div class="carousel" data-carousel="">')
+    L.append('          <button type="button" class="carousel__nav carousel__nav--prev" data-carousel-prev="" aria-label="Vorherige Bilder" hidden>‹</button>')
+    L.append('          <div class="carousel__track" data-carousel-track="">')
+    for f in curated:
+        i = idx_of[f] + 1
         alt = "{0} {1} von brühl, Ansicht {2}".format(row, singular, i)
-        L.append('          <figure class="product-media gallery-item" data-hover-video="">')
-        L.append('            <img src="{src}" alt="{alt}" loading="lazy">'.format(
+        L.append('            <figure class="product-media {on_soft}gallery-item carousel__item" data-hover-video="">'.format(on_soft=on_soft))
+        L.append('              <img src="{src}" alt="{alt}" loading="lazy">'.format(
             src=img_path(row, f), alt=alt))
-        L.append('          </figure>')
+        L.append('            </figure>')
+    L.append('          </div>')
+    L.append('          <button type="button" class="carousel__nav carousel__nav--next" data-carousel-next="" aria-label="Weitere Bilder">›</button>')
     L.append('        </div>')
+    # Toggle + Panel nur, wenn mehr Bilder als kuratiert vorhanden sind.
+    if len(files) > len(curated):
+        L.append('')
+        L.append(
+            '        <button type="button" class="collection-toggle reveal" '
+            'data-collection-toggle aria-expanded="false" '
+            'aria-controls="{pid}" data-label-open="Weniger anzeigen" '
+            'data-label-closed="Alle {n} Ansichten" style="margin-top:20px">'.format(
+                pid=panel_id, n=n
+            )
+        )
+        L.append('          <span class="collection-toggle__label">')
+        L.append('            <span class="collection-toggle__title">{}</span>'.format(title))
+        L.append(
+            '            <span class="collection-toggle__count" '
+            'data-collection-count>Alle {n} Ansichten</span>'.format(n=n)
+        )
+        L.append('          </span>')
+        L.append('          <span class="collection-toggle__chevron" aria-hidden="true">⌄</span>')
+        L.append('        </button>')
+        L.append(
+            '        <div class="collection-panel" id="{pid}" inert aria-hidden="true">'.format(pid=panel_id)
+        )
+        L.append('          <div class="collection-panel__inner">')
+        L.append('            <div class="collection-panel__grid">')
+        for i, f in enumerate(files, 1):
+            alt = "{0} {1} von brühl, Ansicht {2}".format(row, singular, i)
+            L.append('              <figure class="product-media {on_soft}gallery-item" data-hover-video="">'.format(on_soft=on_soft))
+            L.append('                <img src="{src}" alt="{alt}" loading="lazy">'.format(
+                src=img_path(row, f), alt=alt))
+            L.append('              </figure>')
+        L.append('            </div>')
+        L.append('          </div>')
+        L.append('        </div>')
     L.append('      </div>')
     return "\n".join(L)
 
 
-def vimeo_block(row, v, poster_src):
+def vimeo_block(row, v, poster_src, soft=False):
+    on_soft = "feature-video--on-soft " if soft else ""
     L = []
     L.append('')
-    L.append('      <div class="feature-video reveal-media">')
+    L.append('      <div class="feature-video {on_soft}reveal-media">'.format(on_soft=on_soft))
     L.append(
         '        <div class="vimeo-embed" data-vimeo="{id}" '
         'data-vimeo-hash="{hash}" data-vimeo-title="{title}">'.format(
@@ -262,6 +308,7 @@ def vimeo_block(row, v, poster_src):
 
 def build_section(row, groups):
     cfg = ROWS_CFG[row]
+    soft = cfg.get("soft", False)
     hero_group = pick_hero_group(groups)
     hero_file = groups[hero_group][0]
     hero_src = img_path(row, hero_file)
@@ -271,35 +318,41 @@ def build_section(row, groups):
     poster_file = hero_files[1] if len(hero_files) >= 2 else hero_file
     poster_src = img_path(row, poster_file)
 
+    section_cls = "section section--soft" if soft else "section"
+    hero_cls = "product-media product-media--wide reveal-media"
+    if soft:
+        hero_cls += " product-media--on-soft"
+
     L = []
-    L.append('    <section class="section" id="{}">'.format(row))
-    L.append('      <div class="model-row">')
-    L.append('        <div>')
-    L.append('          <p class="eyebrow reveal">{}</p>'.format(cfg["eyebrow"]))
-    L.append('          <h2 class="heading reveal">{}</h2>'.format(cfg["h2"]))
-    L.append('          <p class="designer reveal">{}</p>'.format(cfg["designer"]))
-    for p in cfg["body"]:
-        L.append('          {}'.format(p))
-    L.append('          <a href="#kontakt" class="btn btn--dark reveal">{}</a>'.format(cfg["cta"]))
-    L.append('        </div>')
-    L.append('        <figure class="product-media product-media--hero reveal-media" data-hover-video="">')
-    L.append('          <img src="{src}" alt="{alt}" loading="lazy">'.format(
-        src=hero_src, alt=cfg["hero_alt"]))
-    L.append('        </figure>')
+    L.append('    <section class="{}" id="{}">'.format(section_cls, row))
+    L.append('      <div class="model-head">')
+    L.append('        <p class="eyebrow reveal">{}</p>'.format(cfg["eyebrow"]))
+    L.append('        <h2 class="heading reveal">{}</h2>'.format(cfg["h2"]))
+    L.append('        <p class="designer reveal">{}</p>'.format(cfg["designer"]))
     L.append('      </div>')
+    L.append('      <figure class="{}" data-hover-video="">'.format(hero_cls))
+    L.append('        <img src="{src}" alt="{alt}" loading="lazy">'.format(
+        src=hero_src, alt=cfg["hero_alt"]))
+    L.append('      </figure>')
 
     if cfg.get("vimeo"):
-        L.append(vimeo_block(row, cfg["vimeo"], poster_src))
+        L.append(vimeo_block(row, cfg["vimeo"], poster_src, soft=soft))
+
+    if cfg.get("config_note"):
+        L.append('      <p class="config-note reveal">{}</p>'.format(cfg["config_note"]))
+
+    L.append('      <div class="model-text">')
+    for p in cfg["body"]:
+        L.append('        {}'.format(p))
+    L.append('        <a href="#kontakt" class="btn btn--dark reveal">{}</a>'.format(cfg["cta"]))
+    L.append('      </div>')
 
     for group in GROUP_ORDER:
         files = groups.get(group, [])
         if not files:
             continue
         L.append("")  # Leerzeile zwischen Blöcken
-        if len(files) > 4:
-            L.append(accordion_block(row, group, files))
-        else:
-            L.append(grid_block(row, group, files))
+        L.append(collection_block(row, group, files, soft=soft))
 
     L.append('    </section>')
     return "\n".join(L)
@@ -337,10 +390,10 @@ def main():
             files = groups.get(group, [])
             if not files:
                 continue
-            kind = "Akkordeon" if len(files) > 4 else "Raster   "
+            kind = "Karussell"
             hero_group = pick_hero_group(groups)
-            print("   - {kind}  {grp:18s} {n:3d}  ".format(
-                kind=kind, grp=group, n=len(files)))
+            print("   - {kind}  {grp:18s} {c}/{n}  ".format(
+                kind=kind, grp=group, c=len(pick_curated(files)), n=len(files)))
         print("   Hero-Gruppe: {} -> {}".format(hero_group, groups[hero_group][0]))
         assert total == present, "Zählfehler {}: {} != {}".format(row, total, present)
         content = replace_section(content, row, build_section(row, groups))
