@@ -9,6 +9,10 @@ Vorgehen pro Reihe:
   2. Je Datei einem Möbeltyp zuordnen (erstes Match gewinnt).
   3. Eine <section> erzeugen: Kopfblock + Hero + optional Vimeo + Galerie
      je Möbeltyp (>4 Bilder -> Akkordeon, <=4 -> direktes Raster).
+     Hero-Bild und Video-Standbild erscheinen nicht noch einmal in der
+     Galerie ihrer Gruppe. config_note trägt String oder Liste von Absätzen
+     und steht je config_note_pos nach den Medien (Vorgabe) oder direkt
+     unter dem Kopfblock.
   4. Bereich zwischen den Markern <!-- SEC:REIHE:START --> ... :END -->
      ersetzen (Marker bleiben). Andere Sektionen werden nicht angetastet.
 
@@ -59,7 +63,7 @@ ROWS_CFG = {
         ],
         "cta": "Im Showroom probeliegen",
         "hero_alt": "piano von brühl als Ecksofa",
-        "config_note": "Das Modell piano kannst du individuell konfigurieren — ob große oder abklappbare Lehnen, das bestimmst du.",
+        "config_note": "Das Modell piano lässt sich individuell konfigurieren — ob großzügige oder abklappbare Lehnen, Sie bestimmen die Details.",
         "vimeo": {
             "id": "1156809923",
             "hash": "78051002ef",
@@ -126,6 +130,12 @@ ROWS_CFG = {
         ],
         "cta": "Im Showroom entdecken",
         "hero_alt": "alba von brühl als großzügiges Ecksofa in hellem Loft-Wohnraum",
+        "config_note_title": "alba — individuell nach Maß",
+        "config_note_pos": "nach_name",
+        "config_note": [
+            "Das Modell alba lässt sich millimetergenau nach Ihren Wünschen konfigurieren — ob schlanke oder prägnante Lehnen, individuelle Sitzhöhe oder der passende Sitzkomfort, Sie bestimmen die Details.",
+            "Wählen Sie aus verschiedenen Armlehnen, Untergestellen und Zierkissen — und wie immer bei brühl abziehbare, erneuerbare Bezüge.",
+        ],
         "soft": True,
         "vimeo": {
             "id": "724486738",
@@ -306,9 +316,36 @@ def vimeo_block(row, v, poster_src, soft=False):
     return "\n".join(L)
 
 
+def config_note_lines(cfg):
+    """Hinweis-Block einer Reihe als Liste von HTML-Zeilen (evtl. leer).
+
+    config_note darf String oder Liste von Absätzen sein; config_note_title
+    ist eine optionale Überschrift über dem Hinweis (vorhandene Auszeichnung
+    'eyebrow', Großbuchstaben übernimmt das Stylesheet).
+    """
+    notes = cfg.get("config_note")
+    if not notes:
+        return []
+    if isinstance(notes, str):
+        notes = [notes]
+    L = []
+    title = cfg.get("config_note_title")
+    if title:
+        L.append('      <p class="config-note__title reveal">{}</p>'.format(title))
+    for note in notes:
+        L.append('      <p class="config-note reveal">{}</p>'.format(note))
+    return L
+
+
 def build_section(row, groups):
     cfg = ROWS_CFG[row]
     soft = cfg.get("soft", False)
+    note_pos = cfg.get("config_note_pos", "nach_medien")
+    if note_pos not in ("nach_medien", "nach_name"):
+        raise ValueError(
+            "Unbekannte config_note_pos {!r} bei Reihe {!r}".format(note_pos, row)
+        )
+    notes = config_note_lines(cfg)
     hero_group = pick_hero_group(groups)
     hero_file = groups[hero_group][0]
     hero_src = img_path(row, hero_file)
@@ -317,6 +354,17 @@ def build_section(row, groups):
     hero_files = groups[hero_group]
     poster_file = hero_files[1] if len(hero_files) >= 2 else hero_file
     poster_src = img_path(row, poster_file)
+
+    # Hero-Bild und Video-Standbild nicht doppelt zeigen (R3-1, Aufgabe D):
+    # beide aus der Galerie ihrer Gruppe herausnehmen — Kuratierung und
+    # Aufklapper zählen damit automatisch mit. Reihen ohne Vimeo zeigen ihr
+    # Standbild nirgends groß, dann bleibt es in der Galerie. Wird eine
+    # Gruppe dadurch leer, fällt sie im Schleifengang unten weg (kein
+    # leerer Karussell-Rahmen).
+    gallery = {g: list(fs) for g, fs in groups.items()}
+    for used in [hero_file] + ([poster_file] if cfg.get("vimeo") else []):
+        if used in gallery[hero_group]:
+            gallery[hero_group].remove(used)
 
     section_cls = "section section--soft" if soft else "section"
     hero_cls = "product-media product-media--wide reveal-media"
@@ -330,6 +378,8 @@ def build_section(row, groups):
     L.append('        <h2 class="heading reveal">{}</h2>'.format(cfg["h2"]))
     L.append('        <p class="designer reveal">{}</p>'.format(cfg["designer"]))
     L.append('      </div>')
+    if note_pos == "nach_name":
+        L.extend(notes)
     L.append('      <figure class="{}" data-hover-video="">'.format(hero_cls))
     L.append('        <img src="{src}" alt="{alt}" loading="lazy">'.format(
         src=hero_src, alt=cfg["hero_alt"]))
@@ -338,8 +388,8 @@ def build_section(row, groups):
     if cfg.get("vimeo"):
         L.append(vimeo_block(row, cfg["vimeo"], poster_src, soft=soft))
 
-    if cfg.get("config_note"):
-        L.append('      <p class="config-note reveal">{}</p>'.format(cfg["config_note"]))
+    if note_pos != "nach_name":
+        L.extend(notes)
 
     L.append('      <div class="model-text">')
     for p in cfg["body"]:
@@ -348,7 +398,7 @@ def build_section(row, groups):
     L.append('      </div>')
 
     for group in GROUP_ORDER:
-        files = groups.get(group, [])
+        files = gallery.get(group, [])
         if not files:
             continue
         L.append("")  # Leerzeile zwischen Blöcken
