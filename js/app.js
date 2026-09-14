@@ -332,13 +332,30 @@
      wird der jeweilige Button über updateNav ausgeblendet.
      Track fehlt -> Carousel wird übersprungen; fehlt ein Button, läuft
      nur die andere Richtung (updateNav bleibt sicher). */
-  /* Ambient-Videos (z. B. Mitsubishi-Klima) laden erst, wenn ihre Sektion in
-     Sichtweite scrollt — data-src wird dann zu src, danach Autoplay im Loop. */
+  /* Ambient-Videos laden erst, wenn ihre Sektion in Sichtweite scrollt —
+     data-src wird dann zu src, danach Autoplay im Loop. Erfasst werden die
+     Klima-Stimmung (.klima-ambient) und die Ausziehvideos der Schlafsofa-
+     Sektionen (.feature-video, Auftrag S2) — eine Logik für beide.
+     Bei prefers-reduced-motion läuft nichts von selbst: Das Video bekommt
+     controls, und die Quelle wird erst beim ersten Klick nachgeladen. */
   function initAmbientVideos() {
-    var videos = document.querySelectorAll('.klima-ambient video[data-src]');
+    var videos = document.querySelectorAll(
+      '.klima-ambient video[data-src], .feature-video video[data-src]');
     if (!videos.length) return;
-    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-      // Poster genügt; ohne Observer kein Nachladen großer Videos.
+    if (!('IntersectionObserver' in window)) return;
+    if (prefersReducedMotion) {
+      videos.forEach(function (video) {
+        video.controls = true;
+        var nachladen = function () {
+          if (!video.src) {
+            video.src = video.getAttribute('data-src');
+            video.load();
+            video.play().catch(function () {});
+          }
+          video.removeEventListener('click', nachladen);
+        };
+        video.addEventListener('click', nachladen);
+      });
       return;
     }
     var io = new IntersectionObserver(function (entries) {

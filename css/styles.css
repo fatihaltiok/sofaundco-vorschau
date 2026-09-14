@@ -340,6 +340,46 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 .feature-video .media-caption { padding: 18px 24px; }
 .feature-video--on-soft { background: #fff; }
 
+/* ---------- Schlafsofa-Sektionen (Signet & Dienne, Auftrag S2) ---------- */
+/* Ausziehvideo (Signet): volle Inhaltsbreite im bekannten feature-video-Rahmen;
+   das Seitenverhältnis steht je Video im style-Attribut, damit vor dem
+   Nachladen kein Sprung entsteht. */
+.feature-video video { display: block; width: 100%; }
+/* In den Schlafsofa-Blöcken nicht über die volle Inhaltsbreite: Das 4:3-Video
+   von Good Life wäre sonst am Desktop höher als der Bildschirm. */
+.model-block .feature-video { max-width: 840px; margin-inline: auto; }
+/* Bildpaar Tag/Nacht (Dienne): zwei gleich hohe Fotos nebeneinander,
+   unter 640 px untereinander. */
+.media-pair {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  max-width: 1100px; margin: 0 auto;
+}
+.media-pair .product-media img {
+  width: 100%; aspect-ratio: 40 / 26; object-fit: cover;
+}
+.media-pair .media-caption { padding: 14px 12px 16px; }
+@media (max-width: 640px) {
+  .media-pair { grid-template-columns: 1fr; }
+}
+/* „Auf einen Blick" — kompakte Eckdatenliste unter dem Modelltext. */
+.auf-einen-blick { margin-top: 28px; }
+.auf-einen-blick__titel {
+  margin: 0 0 12px; font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--color-gold);
+}
+.auf-einen-blick__liste { margin: 0; display: grid; gap: 6px; }
+/* Zwei feste Spalten: Bezeichnung links, Wert rechts (bricht in seiner
+   Spalte um). Vorher rutschte ein langer Wert mobil unter die Bezeichnung,
+   ein kurzer nicht — die Liste wirkte zerrissen. */
+.auf-einen-blick__liste > div {
+  display: grid; grid-template-columns: 8.5em 1fr; align-items: baseline; gap: 14px;
+}
+.auf-einen-blick__liste dt {
+  font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--color-muted);
+}
+.auf-einen-blick__liste dd { margin: 0; font-size: 15px; line-height: 1.5; }
+
 /* ---------- Ausklappbare Kollektions-Galerien ---------- */
 .collection-toggle {
   display: flex; align-items: center; justify-content: space-between; width: 100%;
@@ -721,11 +761,18 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   .klima-mitsubishi-grid { grid-template-columns: 1fr; }
 }
 
-/* ---------- Kollektion: 6er-Kachelraster (Desktop sauber 3×2) ---------- */
-/* auto-fit ergibt bei voller Breite 5 Spalten (5+1) – ab Desktop erzwingen wir 3,
-   damit sechs Kacheln als 3×2 laufen. Darunter greift wieder auto-fit (2-/1-spaltig). */
+/* ---------- Kollektion: Kachelraster mit mittiger Restreihe ---------- */
+/* Seit der Kachel „Schlafsofas" (Runde 4) sind es sieben Kacheln. Im Raster
+   stand die siebte allein links und wirkte wie vergessen. Ab 600 px laufen
+   die Kacheln deshalb als umbrechende Flex-Zeile mit fester Spaltenbreite
+   (2 bzw. ab 1000 px 3 je Reihe); eine unvollständige letzte Reihe steht
+   mittig. Darunter bleibt das einspaltige Raster. */
+@media (min-width: 600px) {
+  .category-grid { display: flex; flex-wrap: wrap; justify-content: center; }
+  .category-grid > .category-card { flex: 0 0 calc((100% - 24px) / 2); }
+}
 @media (min-width: 1000px) {
-  .category-grid { grid-template-columns: repeat(3, 1fr); }
+  .category-grid > .category-card { flex-basis: calc((100% - 48px) / 3); }
 }
 
 /* ---------- Kachel-Platzhalter (Sortiment ohne Foto) ---------- */
