@@ -23,6 +23,7 @@
     initVimeoClickToLoad();
     initHoverVideo();
     initAmbientVideos();
+    initToOverview();
   });
 
   /* ---------- Mobile Navigation ---------- */
@@ -386,5 +387,44 @@
       window.addEventListener('resize', updateNav);
       updateNav();
     });
+  }
+
+  /* ---------- Knopf „Zur Übersicht" (E-028, R4-1) ----------
+     Sichtbar erst, wenn man die Kacheln (#kollektion) nach unten verlassen
+     hat — genau dann, wenn deren Unterkante oben aus dem Bild gescrollt ist.
+     Zurück bei den Kacheln verschwindet er wieder. Der Sprung selbst läuft
+     über den normalen Anker (scroll-behavior: smooth + scroll-margin-top im
+     CSS), damit er auch ohne JavaScript funktioniert. */
+  function initToOverview() {
+    var btn = document.querySelector('[data-to-overview]');
+    var kollektion = document.getElementById('kollektion');
+    if (!btn || !kollektion) return;
+
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      var sichtbar = kollektion.getBoundingClientRect().bottom < 0;
+      btn.classList.toggle('is-visible', sichtbar);
+      // Ein unsichtbarer Knopf darf weder per Tab noch für den
+      // Screenreader erreichbar sein.
+      if (sichtbar) {
+        btn.removeAttribute('aria-hidden');
+        btn.removeAttribute('tabindex');
+      } else {
+        btn.setAttribute('aria-hidden', 'true');
+        btn.setAttribute('tabindex', '-1');
+      }
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
   }
 })();

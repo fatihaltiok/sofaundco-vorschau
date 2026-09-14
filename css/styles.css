@@ -545,6 +545,103 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 /* Produktbild als Tastatur-Trigger für die Lightbox */
 .product-media img[role="button"]:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
 
+/* ---------- Knopf „Zur Übersicht" (E-028, R4-1) ---------- */
+/* Mitlaufende Milchglas-Pille nach Andreas Vorlage, rechts unten fixed.
+   z-index 45: bewusst UNTER der Kopfleiste (50, dort klappt das Menü auf)
+   und der Lightbox (200). Grundzustand unsichtbar; sichtbar per .is-visible
+   (setzt js/app.js, sobald #kollektion oben aus dem Bild gescrollt ist). */
+.to-overview {
+  position: fixed;
+  right: 24px;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 20px 7px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 32px rgba(38,34,28,0.22);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition:
+    opacity .35s var(--ease),
+    transform .35s var(--ease),
+    visibility 0s linear .35s;
+}
+.to-overview.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition:
+    opacity .35s var(--ease),
+    transform .35s var(--ease),
+    visibility 0s;
+}
+.to-overview:hover,
+.to-overview:focus-visible {
+  color: var(--color-text);
+  background: rgba(255,255,255,0.92);
+  transform: translateY(-2px);
+}
+.to-overview:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+.to-overview__icon {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(38,34,28,0.14);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.to-overview__icon svg { display: block; }
+
+/* Ankersprung des Knopfs: Ohne scroll-margin-top landete die #kollektion-
+   Oberkante im Messlauf bei 0,14px (Desktop) bzw. 0,38px (mobil) — genau
+   HINTER der klebenden Kopfleiste (85px bzw. 65px hoch inkl. Rand).
+   Der Versatz hebt die Sektion genau auf deren Unterkante. */
+#kollektion { scroll-margin-top: 85px; }
+@media (max-width: 980px) {
+  #kollektion { scroll-margin-top: 65px; }
+}
+
+@media (max-width: 600px) {
+  .to-overview {
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    gap: 9px;
+    padding: 6px 15px 6px 6px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    box-shadow: 0 8px 22px rgba(38,34,28,0.26);
+  }
+  .to-overview__icon { width: 32px; height: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .to-overview,
+  .to-overview.is-visible,
+  .to-overview:hover,
+  .to-overview:focus-visible {
+    transform: none;
+    transition: none;
+  }
+}
+
 /* ---------- Reveal-on-Scroll ---------- */
 .reveal {
   opacity: 0; transform: translateY(36px);

@@ -2715,6 +2715,21 @@
 
   </main>
 
+  <!-- ============ KNOPF „ZUR ÜBERSICHT" (E-028, R4-1) ============ -->
+  <!-- Mitlaufender Sprung zurück zum Kachel-Raster. Ein Link statt eines
+       Buttons, damit der Sprung auch ohne JavaScript funktioniert. Sichtbar
+       wird er erst unterhalb der Kollektion (steuert js/app.js). -->
+  <a href="#kollektion" class="to-overview" data-to-overview>
+    <span class="to-overview__icon" aria-hidden="true">
+      <svg viewBox="0 0 18 18" width="18" height="18" fill="currentColor" focusable="false">
+        <circle cx="3" cy="3" r="1.7"/><circle cx="9" cy="3" r="1.7"/><circle cx="15" cy="3" r="1.7"/>
+        <circle cx="3" cy="9" r="1.7"/><circle cx="9" cy="9" r="1.7"/><circle cx="15" cy="9" r="1.7"/>
+        <circle cx="3" cy="15" r="1.7"/><circle cx="9" cy="15" r="1.7"/><circle cx="15" cy="15" r="1.7"/>
+      </svg>
+    </span>
+    <span class="to-overview__label">Zur Übersicht</span>
+  </a>
+
   <!-- ============ LIGHTBOX ============ -->
   <div class="lightbox" data-lightbox aria-label="Produktansicht">
     <img class="lightbox__img" data-lightbox-img src="" alt="Produktansicht in voller Größe">
