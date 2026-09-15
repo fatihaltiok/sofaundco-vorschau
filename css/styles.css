@@ -524,7 +524,16 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   transition: transform 1.1s var(--ease);
 }
 .category-card__eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-gold); margin: 16px 0 6px; }
-.category-card__title { font-family: var(--font-serif); font-size: 24px; margin: 0 0 14px; }
+.category-card__title { font-family: var(--font-serif); font-size: 24px; margin: 0 0 4px; }
+/* Erklärende Zeile zwischen Titel und Foto (E-032, Runde 5): klein und ruhig.
+   min-height hält alle Noten gleich hoch, damit die Fotos einer Reihe bündig
+   beginnen (das Foto sitzt ohnehin unten mit margin-top:auto). */
+.category-card__note {
+  margin: 0 0 14px;
+  min-height: 2.9em;
+  font-size: 13.5px; line-height: 1.45;
+  color: var(--color-muted);
+}
 
 /* ---------- Leistungen ---------- */
 .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
@@ -762,11 +771,11 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 }
 
 /* ---------- Kollektion: Kachelraster mit mittiger Restreihe ---------- */
-/* Seit der Kachel „Schlafsofas" (Runde 4) sind es sieben Kacheln. Im Raster
-   stand die siebte allein links und wirkte wie vergessen. Ab 600 px laufen
-   die Kacheln deshalb als umbrechende Flex-Zeile mit fester Spaltenbreite
-   (2 bzw. ab 1000 px 3 je Reihe); eine unvollständige letzte Reihe steht
-   mittig. Darunter bleibt das einspaltige Raster. */
+/* Sechs Kacheln (E-032, Runde 5: „Stühle & Tische" zusammengeführt) ergeben
+   zwei volle Dreierreihen. Damit das auch bei ungeraden Anzahlen bleibt,
+   laufen die Kacheln ab 600 px als umbrechende Flex-Zeile mit fester
+   Spaltenbreite (2 bzw. ab 1000 px 3 je Reihe); eine unvollständige letzte
+   Reihe steht mittig. Darunter bleibt das einspaltige Raster. */
 @media (min-width: 600px) {
   .category-grid { display: flex; flex-wrap: wrap; justify-content: center; }
   .category-grid > .category-card { flex: 0 0 calc((100% - 24px) / 2); }
@@ -784,17 +793,6 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 .category-card__placeholder-note {
   font-family: var(--font-serif); font-style: italic; font-size: 15px;
   letter-spacing: 0.02em; color: var(--color-muted);
-}
-
-/* ---------- Story-Platzhalter (Schreiner-Werkstatt) ---------- */
-.story-placeholder {
-  max-width: 560px; margin: 0 auto; padding: 44px 32px;
-  background: #fff; border: 1px solid rgba(154,123,79,0.25);
-  text-align: center;
-}
-.story-placeholder__hint {
-  margin: 0; font-family: var(--font-serif); font-style: italic;
-  font-size: 20px; line-height: 1.5; color: var(--color-muted);
 }
 
 /* ---------- Badge („Bald bei uns") ---------- */
@@ -883,4 +881,43 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 @media (prefers-reduced-motion: reduce) {
   .brandband__track { animation: none; }
   .brandband { overflow-x: auto; }
+}
+
+/* ---------- R5-1 / E-034: Erster Bildschirm auf dem Rechner (>980 px) ---------- */
+/* Andreas MacBook-Fenster (~1440×800): bisher fraß das 78vh-Video die
+   Fensterhöhe, und vom Bilderband darunter blieb nur die obere Hälfte.
+   Jetzt gilt: Kopfleiste (84 px Inhalt + 1 px Rahmen = 85 px, gemessen)
+   + Startvideo + Bilderband = genau die Fensterhöhe.
+
+   Das Video ist 16:9 (1920×1080) und wird mit object-fit:cover oben/unten
+   beschnitten. Damit die wichtigen Videopixel — Klimagerät y 175, Füße der
+   Frau y 915 — sichtbar bleiben, braucht es mindestens 740/1080 = 68,5 % der
+   vollen 16:9-Höhe (56,25 vw) ≈ 38,55 vw; es sind 39 vw, das lässt an
+   beiden Kanten ~4 Videopixel Luft. Die Bandkachel ist dann genau der Rest:
+   100svh − Kopfleiste − 2×20 px Bandpadding − 39vw (mind. 100, höchst. 200 px).
+   object-position 50 % 51,5 % hält die Bildmitte des Streifens (Videopixel
+   y ≈ 545) in der Fenstermitte. */
+@media (min-width: 981px) {
+  :root {
+    --kopf: 85px;
+    --band-tile: clamp(100px, calc(100svh - var(--kopf) - 40px - 39vw), 200px);
+  }
+  .hero__media {
+    height: calc(100svh - var(--kopf) - var(--band-tile) - 40px);
+    max-height: 78vh;   /* Obergrenze wie bisher */
+    min-height: 0;      /* die alte 560-px-Untergrenze drückte das Band aus dem Fenster */
+  }
+  .hero__img,
+  .hero__video { object-position: 50% 51.5%; }
+  .brandband { padding: 20px 0; }
+  .brandband__tile { width: var(--band-tile); height: var(--band-tile); }
+  /* Untertitel endet links vom Beistelltisch (Videopixel x ≈ 548 = 28,54 vw
+     der Videobreite) mit 16 px Abstand — er darf nicht über Tisch/Sofa laufen. */
+  .hero__subtitle { max-width: calc(28.5vw - 64px); }
+}
+/* Zwischen 981 und ~1140 px würde der Untertitel in der schmalen Spalte mehr
+   als 4 Zeilen brauchen (gemessen: 5 Zeilen bis 1100 px) — dort bleibt er
+   wie mobil ganz ausgeblendet. */
+@media (min-width: 981px) and (max-width: 1139px) {
+  .hero__subtitle { display: none; }
 }
