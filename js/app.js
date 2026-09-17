@@ -4,7 +4,6 @@
    - Reveal-on-Scroll
    - Lightbox (barrierefrei: Tastatur + Fokus-Handling)
    - Ausklappbare Kollektions-Galerien (Akkordeon, inert wenn zu)
-   - Vimeo Klick-zum-Laden (DSGVO-konform, idempotent, dnt=1)
    - Hover-Video-Hook (Phase 3, aktuell ohne Videos)
    ========================================================================== */
 (function () {
@@ -20,7 +19,6 @@
     initLightbox();
     initCollectionToggles();
     initCarousels();
-    initVimeoClickToLoad();
     initHoverVideo();
     initAmbientVideos();
     initToOverview();
@@ -238,45 +236,6 @@
         if (countEl) countEl.textContent = isOpen ? openLabel : closedLabel;
       });
     });
-  }
-
-  /* ---------- Vimeo Klick-zum-Laden (DSGVO-konform) ---------- */
-  function initVimeoClickToLoad() {
-    var embeds = document.querySelectorAll('[data-vimeo]');
-    embeds.forEach(function (embed) {
-      var poster = embed.querySelector('[data-vimeo-poster]');
-      if (!poster) return;
-      // once: nach dem ersten Laden ist der Poster weg -> kein erneutes Laden.
-      poster.addEventListener('click', function () { loadVimeo(embed); }, { once: true });
-    });
-  }
-
-  function loadVimeo(embed) {
-    if (embed.getAttribute('data-loaded') === 'true') return; // idempotent
-    var id = embed.getAttribute('data-vimeo');
-    if (!id || !/^\d+$/.test(id)) return; // nur numerische Vimeo-IDs
-    var hash = embed.getAttribute('data-vimeo-hash');
-    var title = embed.getAttribute('data-vimeo-title') || 'Vimeo-Video';
-    var wrap = embed.querySelector('[data-vimeo-frame-wrap]');
-    if (!wrap) return;
-
-    var params = new URLSearchParams({ autoplay: '1', loop: '1', muted: '1', dnt: '1' });
-    if (hash) params.set('h', hash);
-
-    var iframe = document.createElement('iframe');
-    iframe.setAttribute('title', title);
-    iframe.setAttribute('src', 'https://player.vimeo.com/video/' + id + '?' + params.toString());
-    iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.setAttribute('frameborder', '0');
-    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-
-    var poster = embed.querySelector('[data-vimeo-poster]');
-    if (poster && poster.parentNode) poster.parentNode.removeChild(poster);
-
-    wrap.innerHTML = '';
-    wrap.appendChild(iframe);
-    embed.setAttribute('data-loaded', 'true');
   }
 
   /* ---------- Hover-Video-Hook (Phase 3 — Mechanik ohne Videos) ----------

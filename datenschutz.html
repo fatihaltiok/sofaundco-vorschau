@@ -102,6 +102,14 @@
 
     .brand .amp { color: var(--gold); }
 
+    /* Echtes Ladenlogo statt Schriftzug (Runde 6, Bild 25 — wie auf der
+       Startseite: 64 px hoch, mobil 38 px). */
+    .brand__logo { height: 64px; width: auto; display: block; }
+
+    @media (max-width: 600px) {
+      .brand__logo { height: 38px; }
+    }
+
     .site-header .top-links {
       display: flex;
       gap: 1.1rem;
@@ -253,7 +261,10 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <a class="brand" href="index.html">Sofa <span class="amp">&amp;</span> Co.</a>
+      <a class="brand" href="index.html">
+        <img class="brand__logo" src="assets/img/logo/sofaco-logo.png"
+             alt="Sofa &amp; Co. — möbel mit funktion" width="480" height="180">
+      </a>
       <nav class="top-links" aria-label="Rechtliche Seiten">
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
@@ -276,7 +287,6 @@
           <li><a href="#allgemeines">Allgemeines zur Datenverarbeitung</a></li>
           <li><a href="#hosting">Hosting &amp; Server-Logfiles</a></li>
           <li><a href="#kontaktaufnahme">Kontaktaufnahme</a></li>
-          <li><a href="#vimeo">Eingebettete Vimeo-Videos</a></li>
           <li><a href="#social-media">Social-Media-Verlinkung</a></li>
           <li><a href="#rechte">Ihre Rechte</a></li>
           <li><a href="#beschwerde">Beschwerderecht bei der Aufsichtsbehörde</a></li>
@@ -296,8 +306,7 @@
         </address>
         <ul class="contact-list">
           <li>Telefon: 069 260 985 62</li>
-          <li>Telefax: 069 260 985 63</li>
-          <li>E-Mail: <a href="mailto:kontakt@sofaundco.shop">kontakt@sofaundco.shop</a></li>
+          <li>E-Mail: <a href="mailto:kontakt@sofaundco-ffm.de">kontakt@sofaundco-ffm.de</a></li>
         </ul>
       </section>
 
@@ -312,7 +321,7 @@
           <li>Art. 6 Abs. 1 lit. f DSGVO — Wahrung berechtigter Interessen des Verantwortlichen oder eines Dritten.</li>
         </ul>
         <p>Personenbezogene Daten werden gelöscht, sobald der Zweck der Speicherung entfällt. Ein Fortbestehen der Speicherung kann sich aus gesetzlichen Aufbewahrungsfristen ergeben, die eine Löschung der Daten ausschließen.</p>
-        <p>Ihre Betroffenenrechte (Auskunft, Berichtigung, Löschung u. a.) sind in <a href="#rechte">Abschnitt 7</a> detailliert dargestellt.</p>
+        <p>Ihre Betroffenenrechte (Auskunft, Berichtigung, Löschung u. a.) sind in <a href="#rechte">Abschnitt 6</a> detailliert dargestellt.</p>
       </section>
 
       <section id="hosting">
@@ -340,26 +349,17 @@
         <p>Die Daten werden gelöscht, sobald sie für die Bearbeitung der Anfrage nicht mehr erforderlich sind. Dies ist für die personenbezogenen Daten aus der Anfrage der Fall, wenn die jeweilige Konversation beendet ist und keine gesetzlichen Aufbewahrungsfristen (z. B. aus Handels- oder Steuerrecht) einer Löschung entgegenstehen.</p>
       </section>
 
-      <section id="vimeo">
-        <h2>5. Eingebettete Vimeo-Videos</h2>
-        <p>Auf unserer Website werden Videos des Anbieters Vimeo LLC, 555 West 18th Street, New York, New York 10011, USA, eingebettet. Die Videos werden jedoch <em>erst nach aktiver Einwilligung</em> durch Sie geladen — es findet also kein automatischer Datenabfluss beim bloßen Aufruf der Seite statt. Vor dem Laden wird Ihnen ein Hinweis („Klicken zum Laden") angezeigt, und erst mit Ihrem aktiven Klick werden die Videoinhalte von Vimeo geladen.</p>
-        <p>Mit dem Klick willigen Sie ein, dass Ihr Browser eine Verbindung zu den Servern von Vimeo aufbaut und dabei Daten (insbesondere Ihre IP-Adresse sowie technische Zugriffsinformationen) an Vimeo übermittelt werden. Die Datenübermittlung in die USA (Drittland) erfolgt auf Grundlage der Standardvertragsklauseln der EU-Kommission; wir weisen darauf hin, dass nach dem EuGH-Urteil (C-311/18) für die USA kein mit der DSGVO gleichwertiges Datenschutzniveau besteht.</p>
-        <p>Rechtsgrundlage für die Verarbeitung ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Die Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen, indem Sie das erneute Laden des Videos ablehnen bzw. über die Einstellungen Ihres Browsers Verbindungen zu Vimeo unterbinden.</p>
-        <p>Weitere Informationen zum Datenschutz bei Vimeo finden Sie in der Datenschutzerklärung des Anbieters: <a href="https://vimeo.com/privacy" rel="noopener" target="_blank">https://vimeo.com/privacy</a>.</p>
-      </section>
-
       <section id="social-media">
-        <h2>6. Social-Media-Verlinkung</h2>
-        <p>Wir verweisen auf unseren Auftritten bei Instagram und TikTok. Diese Verweise sind als reine Verlinkung umgesetzt — es findet beim Aufruf unserer Website kein automatischer Datenfluss zu den jeweiligen Plattformen statt, und es werden keine Plugins eingebettet, die beim Laden der Seite eine Verbindung zum Anbieter herstellen.</p>
-        <p>Ein Austausch personenbezogener Daten mit den Betreibern von Instagram bzw. TikTok erfolgt erst dann, wenn Sie den Link aktiv anklicken und damit die jeweilige Plattform besuchen. Für die Verarbeitung Ihrer Daten durch die Plattform sind ausschließlich die dortigen Anbieter verantwortlich; deren Datenschutzhinweise gelten.</p>
+        <h2>5. Social-Media-Verlinkung</h2>
+        <p>Wir verweisen auf unseren Auftritt bei Instagram. Dieser Verweis ist als reine Verlinkung umgesetzt — es findet beim Aufruf unserer Website kein automatischer Datenfluss zum Betreiber der Plattform statt, und es werden keine Plugins eingebettet, die beim Laden der Seite eine Verbindung zum Anbieter herstellen.</p>
+        <p>Ein Austausch personenbezogener Daten mit dem Betreiber von Instagram erfolgt erst dann, wenn Sie den Link aktiv anklicken und damit die Plattform besuchen. Für die Verarbeitung Ihrer Daten durch die Plattform ist ausschließlich deren Anbieter verantwortlich; dessen Datenschutzhinweise gelten.</p>
         <ul>
           <li>Instagram: <a href="https://instagram.com/sofaundco.shop" rel="noopener" target="_blank">https://instagram.com/sofaundco.shop</a></li>
-          <li>TikTok: <a href="https://www.tiktok.com/@sofaundco_ffm" rel="noopener" target="_blank">https://www.tiktok.com/@sofaundco_ffm</a></li>
         </ul>
       </section>
 
       <section id="rechte">
-        <h2>7. Ihre Rechte</h2>
+        <h2>6. Ihre Rechte</h2>
         <p>Sie haben als betroffene Person folgende Rechte nach der DSGVO:</p>
         <ul>
           <li><strong>Auskunft</strong> über die zu Ihrer Person gespeicherten Daten (Art. 15 DSGVO);</li>
@@ -370,11 +370,11 @@
           <li><strong>Datenübertragbarkeit</strong> der von Ihnen bereitgestellten Daten (Art. 20 DSGVO);</li>
           <li><strong>Widerruf</strong> einer erteilten Einwilligung mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO).</li>
         </ul>
-        <p>Zur Ausübung Ihrer Rechte wenden Sie sich bitte an die unter Abschnitt 1 genannte verantwortliche Person, insbesondere per E-Mail an <a href="mailto:kontakt@sofaundco.shop">kontakt@sofaundco.shop</a>.</p>
+        <p>Zur Ausübung Ihrer Rechte wenden Sie sich bitte an die unter Abschnitt 1 genannte verantwortliche Person, insbesondere per E-Mail an <a href="mailto:kontakt@sofaundco-ffm.de">kontakt@sofaundco-ffm.de</a>.</p>
       </section>
 
       <section id="beschwerde">
-        <h2>8. Beschwerderecht bei der Aufsichtsbehörde</h2>
+        <h2>7. Beschwerderecht bei der Aufsichtsbehörde</h2>
         <p>Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten durch uns zu beschweren. Die Beschwerde können Sie bei der für Ihren Wohnsitz oder Ihren gewöhnlichen Aufenthalt zuständigen Aufsichtsbehörde einlegen.</p>
         <p>Für unser Unternehmen ist folgende Aufsichtsbehörde zuständig:</p>
         <address>
@@ -386,10 +386,9 @@
       </section>
 
       <section id="cookies">
-        <h2>9. Cookies &amp; Analyse-Tools</h2>
+        <h2>8. Cookies &amp; Analyse-Tools</h2>
         <p>Aktuell setzen wir auf dieser Website <strong>keine Cookies zu Marketing- oder Tracking-Zwecken</strong> und <strong>keine Analyse-Tools</strong> ein. Sollten Sie in Ihrem Browser Hinweise auf Cookies finden, handelt es sich ausschließlich um technisch notwendige Cookies, die für den Betrieb der Website erforderlich sind und kein Nutzer-Tracking durchführen.</p>
         <p>Falls wir künftig Tracking-, Analyse-Tools oder Marketing-Cookies einsetzen, werden wir diese hier aufführen, die Rechtsgrundlage benennen und — soweit gesetzlich erforderlich — eine Einwilligungslösung anbieten. Vorher können Sie sich an der hier beschriebenen Verarbeitung orientieren.</p>
-        <p><span class="review-marker">[[BITTE PRÜFEN: falls künftig Tracking-/Analyse-Tools oder Marketing-Cookies eingesetzt werden, hier ergänzen und Einwilligungslösung einbauen]]</span></p>
       </section>
     </div>
   </main>

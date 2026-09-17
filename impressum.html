@@ -92,6 +92,14 @@
 
     .brand .amp { color: var(--gold); }
 
+    /* Echtes Ladenlogo statt Schriftzug (Runde 6, Bild 25 — wie auf der
+       Startseite: 64 px hoch, mobil 38 px). */
+    .brand__logo { height: 64px; width: auto; display: block; }
+
+    @media (max-width: 600px) {
+      .brand__logo { height: 38px; }
+    }
+
     .site-header .top-links {
       display: flex;
       gap: 1.1rem;
@@ -202,7 +210,10 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <a class="brand" href="index.html">Sofa <span class="amp">&amp;</span> Co.</a>
+      <a class="brand" href="index.html">
+        <img class="brand__logo" src="assets/img/logo/sofaco-logo.png"
+             alt="Sofa &amp; Co. — möbel mit funktion" width="480" height="180">
+      </a>
       <nav class="top-links" aria-label="Rechtliche Seiten">
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
@@ -230,14 +241,13 @@
         <h2>Kontakt</h2>
         <ul class="contact-list">
           <li>Telefon: 069 260 985 62</li>
-          <li>Telefax: 069 260 985 63</li>
-          <li>E-Mail: <a href="mailto:kontakt@sofaundco.shop">kontakt@sofaundco.shop</a></li>
+          <li>E-Mail: <a href="mailto:kontakt@sofaundco-ffm.de">kontakt@sofaundco-ffm.de</a></li>
         </ul>
       </section>
 
       <section>
         <h2>Umsatzsteuer-ID</h2>
-        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE159157405</p>
+        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: beantragt</p>
       </section>
 
       <section>
