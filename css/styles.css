@@ -313,6 +313,11 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 
 .model-text { max-width: 820px; margin: 36px auto 0; }
 .model-text .btn { margin-top: 20px; }
+/* Sichtbarer Abstand zwischen zwei Modellblöcken (E-041, Andreas Runde 7:
+   Der Knopf „Im Showroom probeliegen" klebte ohne Luft an der Überschrift
+   des nächsten Modells). Gilt gleich für Signet und Dienne — mit oder
+   ohne Knopf; .model-block gibt es nur in diesen beiden Sektionen. */
+.model-block + .model-block { margin-top: 56px; }
 
 /* ---------- Produktmedien (Hover-Video-Hook, Lightbox) ---------- */
 .product-media {
