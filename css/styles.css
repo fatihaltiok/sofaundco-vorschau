@@ -597,10 +597,11 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   .stimme { flex: 0 0 100%; }
 }
 
-/* ---------- Sonderangebote (R6-4 / E-040) ---------- */
-/* Zwei Produktkarten (Rechner nebeneinander, Handy untereinander) auf weichem
-   Grund — ruhig und hochwertig, kein SALE-Badge, kein %-Rabatt. Fotos stehen
-   ganz im Rahmen (object-fit: contain auf Weiß), kein Beschnitt der Möbel. */
+/* ---------- Sonderangebote (R6-4 / E-040, vier Karten seit E-045 / R8-1) ---------- */
+/* Vier Produktkarten (Rechner: 2 × 2 nebeneinander, Handy untereinander) auf
+   weichem Grund — ruhig und hochwertig, kein SALE-Badge, kein %-Rabatt. Fotos
+   stehen ganz im Rahmen (object-fit: contain auf Weiß), kein Beschnitt der
+   Möbel. */
 .sonder-grid {
   display: grid; grid-template-columns: 1fr; gap: 40px;
   max-width: 1240px; margin: 0 auto;
@@ -613,8 +614,11 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   display: flex; flex-direction: column;
 }
 /* Fotos in voller Kartenbreite im eigenen Seitenverhältnis — kein fester
-   Rahmen, keine weißen Ränder; Alba (quadratisch) und Arva (Raum + Ansichten)
-   ergeben so fast gleich hohe Karten (Orchestrator, 17.09.). */
+   Rahmen, keine weißen Ränder. Sehr unterschiedliche Formate (Alba fast
+   quadratisch, Four Two/Moule hochkant, ARVA sehr breit plus Ansichten):
+   align-items:start lässt jede Karte ihre eigene Höhe behalten, damit keine
+   großen leeren weißen Flächen entstehen; margin-top:auto setzt den
+   Preisblock an den jeweiligen Kartenboden (E-045 / R8-1). */
 .sonder-karte__bild { margin: 0; }
 .sonder-karte__bild img,
 .sonder-karte__ansichten img { width: 100%; height: auto; object-fit: contain; display: block; }
