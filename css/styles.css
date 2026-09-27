@@ -229,6 +229,22 @@ em { font-style: italic; }
   transition: background .25s ease;
 }
 .hero__cta:hover { background: var(--color-gold); color: #fff; }
+/* Andrea 26.09.: brühl-Logo im Anfangsbild — das Sofa im Video ist das roro.
+   Klein und ruhig unten rechts, von Anfang an sichtbar (auch während das Video
+   läuft), damit es neben dem Sofa & Co-Logo nicht konkurriert. */
+.hero__marke {
+  position: absolute; right: var(--pad-x); bottom: clamp(20px, 3.2vh, 34px);
+  display: flex; align-items: center; gap: 10px;
+  color: #F6F0E4; text-decoration: none;
+  opacity: 0; animation: heroFadeIn 1.2s ease-out .6s forwards;
+  filter: drop-shadow(0 1px 8px rgba(28,20,10,0.45));
+  transition: filter .3s ease;
+}
+.hero__marke-text {
+  font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; line-height: 1;
+}
+.hero__marke-logo { height: 17px; width: auto; display: block; }
+.hero__marke:hover { filter: drop-shadow(0 1px 10px rgba(28,20,10,0.7)); }
 
 /* ---------- Sections & Typografie ---------- */
 .section { max-width: var(--maxw); margin: 0 auto; padding: var(--pad-section) var(--pad-x); }
@@ -819,7 +835,7 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 .reveal-media.is-visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-media, .hero__word, .hero__subtitle, .hero__cta { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+  .reveal, .reveal-media, .hero__word, .hero__subtitle, .hero__cta, .hero__marke { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
   .carousel__track { scroll-behavior: auto; }
   .nav, .nav-toggle span, .category-card__media img { transition: none !important; }
 }
@@ -999,6 +1015,9 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 @media (max-width: 980px) {
   .brand__logo { height: 38px; }
   .hero__logo { width: min(300px, 72vw); }
+  .hero__marke { gap: 8px; }
+  .hero__marke-text { font-size: 10px; letter-spacing: 0.2em; }
+  .hero__marke-logo { height: 14px; }
   .brandband { padding: 18px 0; }
   .brandband__tile { width: 140px; height: 140px; margin-right: 10px; }
 }
