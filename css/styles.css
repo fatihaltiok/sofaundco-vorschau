@@ -1069,3 +1069,18 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 @media (min-width: 981px) and (max-width: 1139px) {
   .hero__subtitle { display: none; }
 }
+
+/* ---------- R10 / E-048: Tablet — das ganze Bild, hochkant wie quer ---------- */
+/* Andrea 27.09. am iPad: „Es wirk sehr abgeschnitten… Vielleicht das gesamte
+   Bild etwas kleiner… und hochkant ist ist auch nicht gut“. Ab 600 px Breite
+   läuft deshalb immer die 16:9-Fassung, und der Rahmen hat genau 16:9 — das
+   Video wird nicht mehr beschnitten. Die Hochkant-Fassung (9:16) bleibt den
+   Handys (< 600 px). Der Rechner mit Maus (E-034, MacBook-Fenster) ist davon
+   ausgenommen: dort gilt der Aufbau „Kopf + Video + Bilderband = Fensterhöhe“
+   unverändert; über 980 px greift die Regel nur auf Touch-Geräten. */
+@media (min-width: 600px) and (max-width: 980px) {
+  .hero__media { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
+}
+@media (min-width: 981px) and (hover: none) and (pointer: coarse) {
+  .hero__media { height: auto; max-height: none; min-height: 0; aspect-ratio: 16 / 9; }
+}

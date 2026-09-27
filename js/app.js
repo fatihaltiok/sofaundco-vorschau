@@ -70,12 +70,36 @@
     if (!video) return;
     var content = document.querySelector('.hero__content');
 
-    // Schmale Bildschirme bekommen die Hochkant-Fassung (9:16) des Hero-Videos.
+    // Handys (< 600 px) bekommen die Hochkant-Fassung (9:16) des Hero-Videos,
+    // alles ab 600 px die 16:9-Fassung (E-048). Die Wahl wird beim Drehen des
+    // Geräts neu getroffen — vorher lief quer weiter die Hochkant-Fassung
+    // (Andrea 27.09.: „Es wirk sehr abgeschnitten“). Gleiche Grenze wie das
+    // <source media> des Standbilds in index.html.
     var mobilSrc = video.getAttribute('data-src-mobil');
-    if (mobilSrc && window.matchMedia('(max-width: 980px)').matches) {
-      video.src = mobilSrc;
-      video.load();
+    var desktopSrc = video.getAttribute('src');
+    var handy = window.matchMedia('(max-width: 599px)');
+    function passendeQuelle() {
+      return (mobilSrc && handy.matches) ? mobilSrc : desktopSrc;
     }
+    function setzeQuelle() {
+      var soll = passendeQuelle();
+      if (video.getAttribute('src') === soll) return;
+      var zeit = video.currentTime;
+      var lief = !video.paused && !video.ended;
+      video.setAttribute('src', soll);
+      video.load();
+      if (lief) {
+        video.addEventListener('loadedmetadata', function weiter() {
+          video.removeEventListener('loadedmetadata', weiter);
+          try { video.currentTime = zeit; } catch (e) { /* noop */ }
+          var p = video.play();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        });
+      }
+    }
+    setzeQuelle();
+    if (handy.addEventListener) handy.addEventListener('change', setzeQuelle);
+    else if (handy.addListener) handy.addListener(setzeQuelle);
 
     video.muted = true;
     video.loop = false;
