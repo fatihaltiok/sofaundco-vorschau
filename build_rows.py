@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 """
 build_rows.py — Baut die brühl-Reihen piano, roro, moule, four-two, alba
-in index.html als Wisch-Band (Karussell + „Alle N Ansichten"-Aufklapper).
+in index.html als Wisch-Band (Karussell + „Alle Kombinationen erkunden"-Aufklapper).
 
 Vorgehen pro Reihe:
   1. Bilddateien aus assets/img/bruehl/<reihe>/ einlesen (sorted).
   2. Je Datei einem Möbeltyp zuordnen (erstes Match gewinnt).
-  3. Eine <section> erzeugen: Kopfblock + Hero + optional Vimeo + Galerie
+  3. Eine <section> erzeugen: Kopfblock + Hero + optional Film + Galerie
      je Möbeltyp (>4 Bilder -> Akkordeon, <=4 -> direktes Raster).
      Hero-Bild und Video-Standbild erscheinen nicht noch einmal in der
      Galerie ihrer Gruppe. config_note trägt String oder Liste von Absätzen
@@ -64,9 +64,7 @@ ROWS_CFG = {
         "cta": "Im Showroom probeliegen",
         "hero_alt": "piano von brühl als Ecksofa",
         "config_note": "Das Modell piano lässt sich individuell konfigurieren — ob großzügige oder abklappbare Lehnen, Sie bestimmen die Details.",
-        "vimeo": {
-            "id": "1156809923",
-            "hash": "78051002ef",
+        "film": {
             "ratio": "3/2",
             "title": "piano — Animation",
             "caption": "piano in Bewegung — vom Sofa zur Liegefläche",
@@ -82,12 +80,11 @@ ROWS_CFG = {
         ],
         "cta": "Im Showroom probesitzen",
         "hero_alt": "roro von brühl als Ecksofa",
-        "vimeo": {
-            "id": "1166270195",
-            "hash": "b04c9916af",
+        "film": {
             "ratio": "3/2",
             "title": "roro — Animation der Verwandlung",
             "caption": "roro in Bewegung — vom Ecksofa zur Liegelandschaft",
+            "muted": True,
         },
     },
     "moule": {
@@ -100,7 +97,18 @@ ROWS_CFG = {
         ],
         "cta": "Im Showroom probesitzen",
         "hero_alt": "moule von brühl als Ecksofa",
-        "vimeo": None,
+        # Fatih 28.09.: „leg noch mouele filme rein auch wenn sie hochkant
+        # sind aber so dass sie passen“ — zwei brühl-Reels (9:16) als Paar
+        # nebeneinander, je mit eigenem Standbild (E-052).
+        "film": {
+            "ratio": "9/16",
+            "paar": [
+                ("moule-pink", "moule extra small — Verwandlung"),
+                ("moule-natur", "moule — Verwandlung"),
+            ],
+            "caption": "moule in Bewegung — Drehsitze, Lehnen und Liegefläche",
+            "muted": True,
+        },
     },
     "four-two": {
         "eyebrow": "Modell im Fokus · four-two",
@@ -112,12 +120,11 @@ ROWS_CFG = {
         ],
         "cta": "Im Showroom probeliegen",
         "hero_alt": "four-two von brühl als Ecksofa",
-        "vimeo": {
-            "id": "724494860",
-            "hash": "2082ee526c",
+        "film": {
             "ratio": "16/9",
             "title": "four-two — Design Roland Meyer-Brühl",
             "caption": "four-two in Bewegung — Ecksofa, Lounge und Doppelbett",
+            "muted": True,
         },
     },
     "alba": {
@@ -137,12 +144,13 @@ ROWS_CFG = {
             "Wählen Sie aus verschiedenen Armlehnen, Untergestellen und Zierkissen — und wie immer bei brühl abziehbare, erneuerbare Bezüge.",
         ],
         "soft": True,
-        "vimeo": {
-            "id": "724486738",
-            "hash": "284a3b3342",
-            "ratio": "21/9",
+        "film": {
+            # Der Film ist 16:9 (LISTE.md); der frühere 21/9-Wert der
+            # Einbettung war falsch und wird hier korrigiert.
+            "ratio": "16/9",
             "title": "alba — Design Roland Meyer-Brühl",
             "caption": "alba in Bewegung — wandelbares Funktionsmöbel",
+            "muted": True,
         },
     },
 }
@@ -224,7 +232,7 @@ def collection_block(row, group, files, soft=False):
     n = len(files)
     singular = SINGULAR[group]
     panel_id = "panel-{}-{}".format(row, slug(group))
-    title = "Alle Ansichten — {0} {1}".format(row, group)
+    title = "{0} {1}".format(row, group)
     idx_of = {f: i for i, f in enumerate(files)}
     L = []
     L.append('      <div class="model-collection" style="margin-top:56px">')
@@ -251,19 +259,21 @@ def collection_block(row, group, files, soft=False):
     # Toggle + Panel nur, wenn mehr Bilder als kuratiert vorhanden sind.
     if len(files) > len(curated):
         L.append('')
+        # Geschlossener Zustand heißt seit Runde 7 „Alle Kombinationen
+        # erkunden" (E-043) — ohne Anzahl, auf der ganzen Seite gleich.
         L.append(
             '        <button type="button" class="collection-toggle reveal" '
             'data-collection-toggle aria-expanded="false" '
             'aria-controls="{pid}" data-label-open="Weniger anzeigen" '
-            'data-label-closed="Alle {n} Ansichten" style="margin-top:20px">'.format(
-                pid=panel_id, n=n
+            'data-label-closed="Alle Kombinationen erkunden" style="margin-top:20px">'.format(
+                pid=panel_id
             )
         )
         L.append('          <span class="collection-toggle__label">')
         L.append('            <span class="collection-toggle__title">{}</span>'.format(title))
         L.append(
             '            <span class="collection-toggle__count" '
-            'data-collection-count>Alle {n} Ansichten</span>'.format(n=n)
+            'data-collection-count>Alle Kombinationen erkunden</span>'
         )
         L.append('          </span>')
         L.append('          <span class="collection-toggle__chevron" aria-hidden="true">⌄</span>')
@@ -286,30 +296,63 @@ def collection_block(row, group, files, soft=False):
     return "\n".join(L)
 
 
-def vimeo_block(row, v, poster_src, soft=False):
+def film_block(row, v, poster_src, soft=False):
+    """Film-Block einer Reihe: selbst gehostetes Video statt Einbettung (E-037).
+
+    Das Video liegt unter assets/video/bruehl/<reihe>.mp4 und heißt wie die
+    Reihe. Kein Autoplay, native Steuerelemente; das Seitenverhältnis steht
+    je Film über die CSS-Variable --film-ratio. Filme ohne Ton (alle außer
+    piano) tragen muted.
+    """
     on_soft = "feature-video--on-soft " if soft else ""
+    muted_attr = " muted" if v.get("muted") else ""
+    if v.get("paar"):
+        return film_paar_block(v, on_soft, muted_attr)
+    src = "assets/video/bruehl/{}.mp4".format(row)
     L = []
     L.append('')
     L.append('      <div class="feature-video {on_soft}reveal-media">'.format(on_soft=on_soft))
     L.append(
-        '        <div class="vimeo-embed" data-vimeo="{id}" '
-        'data-vimeo-hash="{hash}" data-vimeo-title="{title}">'.format(
-            id=v["id"], hash=v["hash"], title=v["title"]
+        '        <div class="film" style="--film-ratio:{ratio}">'.format(ratio=v["ratio"])
+    )
+    L.append(
+        '          <video controls playsinline preload="none"{muted_attr} '
+        'poster="{poster}" title="Film: {title}" '
+        'aria-label="Film abspielen: {title}">'.format(
+            muted_attr=muted_attr, poster=poster_src, title=v["title"]
         )
     )
     L.append(
-        '          <div class="vimeo-embed__frame-wrap" '
-        'style="--vimeo-ratio:{ratio}" data-vimeo-frame-wrap>'.format(ratio=v["ratio"])
+        '            <source src="{src}" type="video/mp4">'.format(src=src)
     )
-    L.append(
-        "            <button type=\"button\" class=\"vimeo-embed__poster\" "
-        "data-vimeo-poster style=\"background-image:url('{src}')\" "
-        'aria-label="Video laden: {title}">'.format(src=poster_src, title=v["title"])
-    )
-    L.append('              <span class="vimeo-embed__play" aria-hidden="true">►</span>')
-    L.append('              <span class="vimeo-embed__label">Video von Vimeo laden</span>')
-    L.append('            </button>')
-    L.append('          </div>')
+    L.append('          </video>')
+    L.append('        </div>')
+    L.append('        <p class="media-caption">{}</p>'.format(v["caption"]))
+    L.append('      </div>')
+    return "\n".join(L)
+
+
+def film_paar_block(v, on_soft, muted_attr):
+    """Zwei Hochformat-Filme nebeneinander (E-052, moule).
+
+    Jeder Film liegt als assets/video/bruehl/<name>.mp4 mit eigenem
+    Standbild <name>.jpg daneben; die Galerie der Reihe bleibt unberührt.
+    """
+    L = ['']
+    L.append('      <div class="feature-video feature-video--paar {on_soft}reveal-media">'.format(on_soft=on_soft))
+    L.append('        <div class="film-paar">')
+    for name, title in v["paar"]:
+        base = "assets/video/bruehl/{}".format(name)
+        L.append('          <div class="film" style="--film-ratio:{ratio}">'.format(ratio=v["ratio"]))
+        L.append(
+            '            <video controls playsinline preload="none"{muted_attr} '
+            'poster="{base}.jpg" title="Film: {title}" '
+            'aria-label="Film abspielen: {title}">'.format(
+                muted_attr=muted_attr, base=base, title=title)
+        )
+        L.append('              <source src="{base}.mp4" type="video/mp4">'.format(base=base))
+        L.append('            </video>')
+        L.append('          </div>')
     L.append('        </div>')
     L.append('        <p class="media-caption">{}</p>'.format(v["caption"]))
     L.append('      </div>')
@@ -355,14 +398,15 @@ def build_section(row, groups):
     poster_file = hero_files[1] if len(hero_files) >= 2 else hero_file
     poster_src = img_path(row, poster_file)
 
-    # Hero-Bild und Video-Standbild nicht doppelt zeigen (R3-1, Aufgabe D):
+    # Hero-Bild und Film-Poster nicht doppelt zeigen (R3-1, Aufgabe D):
     # beide aus der Galerie ihrer Gruppe herausnehmen — Kuratierung und
-    # Aufklapper zählen damit automatisch mit. Reihen ohne Vimeo zeigen ihr
+    # Aufklapper zählen damit automatisch mit. Reihen ohne Film zeigen ihr
     # Standbild nirgends groß, dann bleibt es in der Galerie. Wird eine
     # Gruppe dadurch leer, fällt sie im Schleifengang unten weg (kein
     # leerer Karussell-Rahmen).
     gallery = {g: list(fs) for g, fs in groups.items()}
-    for used in [hero_file] + ([poster_file] if cfg.get("vimeo") else []):
+    eigenes_standbild = bool(cfg.get("film", {}).get("paar"))
+    for used in [hero_file] + ([poster_file] if cfg.get("film") and not eigenes_standbild else []):
         if used in gallery[hero_group]:
             gallery[hero_group].remove(used)
 
@@ -385,8 +429,8 @@ def build_section(row, groups):
         src=hero_src, alt=cfg["hero_alt"]))
     L.append('      </figure>')
 
-    if cfg.get("vimeo"):
-        L.append(vimeo_block(row, cfg["vimeo"], poster_src, soft=soft))
+    if cfg.get("film"):
+        L.append(film_block(row, cfg["film"], poster_src, soft=soft))
 
     if note_pos != "nach_name":
         L.extend(notes)

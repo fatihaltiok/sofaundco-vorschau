@@ -64,6 +64,7 @@
   --color-soft: #F7F4EF;
   --color-dark: #26221C;
   --color-light: #F5F1EA;
+  --color-sand: #EDE3D3;
   --font-serif: 'Cormorant Garamond', 'Georgia', serif;
   --font-sans: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --maxw: 1360px;
@@ -191,6 +192,13 @@ em { font-style: italic; }
 /* Während das Hero-Video läuft, ist der Schriftzug ausgeblendet; er erscheint,
    wenn das Video durchgelaufen ist und das Standbild zurückkehrt (per JS gesteuert). */
 .hero__content.is-hidden { opacity: 0; }
+/* E-054: Lesbarkeit von Andreas Überschrift und Satz. Die Abdunklung gehört zum
+   Textblock und blendet mit ihm ein — während das Video läuft, bleibt das Bild hell. */
+.hero__content::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(30,25,18,0.55) 0%, rgba(30,25,18,0.34) 30%, rgba(30,25,18,0) 56%);
+}
+.hero__content > * { position: relative; }
 .hero__title {
   margin: 0;
   font-family: var(--font-sans);
@@ -216,8 +224,16 @@ em { font-style: italic; }
   filter: drop-shadow(0 1px 0 rgba(255,255,255,0.25));
   animation: goldSheen 9s ease-in-out infinite;
 }
+/* Andrea, Runde 12 (E-054): Überschrift über dem Satz — auf ALLEN Geräten sichtbar,
+   weil sie erklärt, was das Video zeigt. */
+.hero__headline {
+  margin: 22px 0 0; font-family: var(--font-serif); font-weight: 400;
+  font-size: clamp(22px, 2.3vw, 34px); line-height: 1.25; max-width: 640px;
+  color: #FBF6EC; text-shadow: 0 1px 12px rgba(28,20,10,0.65);
+  opacity: 0; animation: heroFadeIn 1s ease-out 1.5s forwards;
+}
 .hero__subtitle {
-  margin: 26px 0 0; font-size: 16px; line-height: 1.6; max-width: 640px;
+  margin: 14px 0 0; font-size: 16px; line-height: 1.6; max-width: 640px;
   letter-spacing: 0.02em; color: #EEE7D9; text-shadow: 0 1px 10px rgba(28,20,10,0.6);
   opacity: 0; animation: heroFadeIn 1s ease-out 1.7s forwards;
 }
@@ -253,6 +269,7 @@ em { font-style: italic; }
 .section--soft { background: var(--color-soft); }
 .section--dark { background: var(--color-dark); color: var(--color-light); }
 .section--dark .eyebrow { color: var(--color-gold-light); }
+.section--sand { background: var(--color-sand); color: var(--color-text); }
 .section--center { text-align: center; }
 .section--tight-top { padding-top: 0; }
 
@@ -485,16 +502,24 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 }
 .carousel__nav--prev { left: -23px; }
 .carousel__nav--next { right: -23px; }
-.carousel__nav:hover { background: var(--color-gold); color: #fff; }
 .carousel__nav[hidden],
 .carousel__nav:disabled { display: none; }
 .carousel__nav:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
 
-/* Standardmäßig (Touch) ausgeblendet, nur bei Hover-fähigen Geräten eingeblendet */
-.carousel__nav { display: none; }
+/* Pfeile auf allen Geräten (E-049). Bis 28.09. waren sie auf Touch-Geräten
+   ausgeblendet — auf Handy und iPad zeigte nur der Anschnitt des nächsten
+   Bildes, dass das Band weitergeht, und den übersah man. Gold-Hover nur mit
+   Maus, sonst bleibt der Knopf nach dem Antippen gold stehen. */
 @media (hover: hover) and (pointer: fine) {
-  .carousel__nav { display: flex; align-items: center; justify-content: center; }
+  .carousel__nav:hover { background: var(--color-gold); color: #fff; }
   .category-card:hover .category-card__media img { transform: scale(1.05); }
+}
+/* Touch: etwas kleiner und innerhalb des Bandes, damit nichts über den
+   Bildschirmrand ragt. */
+@media (hover: none), (pointer: coarse) {
+  .carousel__nav { width: 38px; height: 38px; font-size: 19px; }
+  .carousel__nav--prev { left: 8px; }
+  .carousel__nav--next { right: 8px; }
 }
 
 /* ---------- Platzhalter-Kacheln (fehlende Fotos) ---------- */
@@ -544,6 +569,18 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   display: block; object-fit: contain; background: #14110D;
 }
 
+/* Zwei Hochformat-Filme nebeneinander (E-052, moule): auf jedem Gerät
+   zwei Spalten, zusammen höchstens 560 px breit — so bleibt jeder Film
+   unter ~500 px hoch und die Seite wird nicht endlos lang. */
+.feature-video--paar { padding: 20px 20px 0; }
+.film-paar {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  max-width: 560px; margin-inline: auto;
+}
+.film-paar .film { background: #fff; }
+.film-paar .film video { background: #fff; }
+.feature-video--paar .media-caption { text-align: center; }
+
 /* ---------- Kategorien (Kollektions-Übersicht) ---------- */
 /* Beschriftung ÜBER dem Foto (Wunsch der Inhaberin): Die Karte ist eine
    Flex-Spalte, das Bild sitzt mit margin-top:auto am Kartenende — so bleiben
@@ -575,7 +612,9 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 .service-card__cta { font-size: 12.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-gold); border-bottom: 1px solid var(--color-gold); align-self: flex-start; padding-bottom: 3px; }
 
 /* ---------- Kundenstimmen (R6-3 / E-039: fünf Google-Bewertungen als fester Text) ---------- */
-/* Ruhig und hochwertig auf dem dunklen Grund: Serif-Zitate, die typografischen
+/* Seit E-050 (Andrea, Runde 11: „dunkle Farbe nicht so freundlich“) auf
+   warmem Sandton statt dunkel, alle zehn Bewertungen der alten Seite.
+   Ruhig und hochwertig: Serif-Zitate, die typografischen
    Anführungszeichen kommen per ::before/::after aus dem Layout — die Zitate
    selbst stehen zeichengenau wie in der Quelle (Gate 18 prüft das). */
 .stimmen-grid {
@@ -585,26 +624,26 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 .stimme {
   margin: 0; flex: 0 0 calc((100% - 72px) / 3);
   display: flex; flex-direction: column; align-items: flex-start;
-  border-top: 1px solid rgba(245,241,234,0.25); padding-top: 26px;
+  border-top: 1px solid rgba(154,123,79,0.35); padding-top: 26px;
 }
 .stimme__sterne {
-  font-size: 14px; letter-spacing: 0.22em; color: var(--color-gold-light);
+  font-size: 14px; letter-spacing: 0.22em; color: var(--color-gold);
 }
 .stimme__text {
   margin: 16px 0 0;
   font-family: var(--font-serif); font-size: 21px; font-weight: 400; line-height: 1.55;
-  color: rgba(245,241,234,0.92);
+  color: var(--color-text);
 }
 .stimme__text p { margin: 0; display: inline; }
 .stimme__text::before { content: "„"; }
 .stimme__text::after { content: "“"; }
 .stimme__name {
   margin-top: 18px; font-size: 13px; font-weight: 500;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-light);
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text);
 }
 .stimme__quelle {
   margin: 5px 0 0; font-size: 12px; letter-spacing: 0.08em;
-  color: rgba(245,241,234,0.62);
+  color: var(--color-muted);
 }
 @media (max-width: 980px) {
   .stimme { flex: 0 0 calc((100% - 36px) / 2); }
@@ -835,7 +874,7 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 .reveal-media.is-visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-media, .hero__word, .hero__subtitle, .hero__cta, .hero__marke { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+  .reveal, .reveal-media, .hero__word, .hero__headline, .hero__subtitle, .hero__cta, .hero__marke { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
   .carousel__track { scroll-behavior: auto; }
   .nav, .nav-toggle span, .category-card__media img { transition: none !important; }
 }
@@ -1009,12 +1048,30 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   width: 7px; height: 7px; border-radius: 50%; background: var(--color-gold);
 }
 .pillar__list strong { color: var(--color-text); font-weight: 600; }
+/* Andrea, Runde 13 (E-055): VR-Raumplanung mit Kooperationspartner Radam Haustechnik —
+   ruhige Zeile unter der Liste, Logo freigestellt auf dem cremefarbenen Grund. */
+.pillar__partner {
+  margin: 26px 0 0; padding-top: 20px; border-top: 1px solid rgba(154,123,79,0.28);
+  font-size: 14px; line-height: 1.6; color: var(--color-muted);
+}
+.pillar__partner-logo { display: block; width: min(220px, 60%); height: auto; margin-top: 12px; }
 .intro-outro { text-align: center; max-width: 760px; margin: 56px auto 0; }
 
 /* ---------- W1: Responsive ---------- */
 @media (max-width: 980px) {
   .brand__logo { height: 38px; }
   .hero__logo { width: min(300px, 72vw); }
+}
+/* E-054, Handy: Die Frau sitzt im Hochkant-Schlussbild mittig — Textblock klein
+   und tief, damit ihr Gesicht frei bleibt; Abdunklung von unten statt von links. */
+@media (max-width: 599px) {
+  .hero__logo { width: min(210px, 54vw); }
+  .hero__headline { font-size: 19px; margin-top: 10px; max-width: 86vw; }
+  .hero__cta { margin-top: 16px; padding: 12px 26px; font-size: 11.5px; }
+  .hero__content { padding-bottom: 50px; }   /* Knopf endet über „roro von brühl“ (E-047) */
+  .hero__content::before {
+    background: linear-gradient(0deg, rgba(30,25,18,0.62) 0%, rgba(30,25,18,0.38) 26%, rgba(30,25,18,0) 48%);
+  }
   .hero__marke { gap: 8px; }
   .hero__marke-text { font-size: 10px; letter-spacing: 0.2em; }
   .hero__marke-logo { height: 14px; }
