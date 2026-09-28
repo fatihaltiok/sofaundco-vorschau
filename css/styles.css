@@ -248,6 +248,13 @@ em { font-style: italic; }
 /* Andrea 26.09.: brühl-Logo im Anfangsbild — das Sofa im Video ist das roro.
    Klein und ruhig unten rechts, von Anfang an sichtbar (auch während das Video
    läuft), damit es neben dem Sofa & Co-Logo nicht konkurriert. */
+/* E-057: Kennzeichnung nach EU-KI-Verordnung Art. 50 — Video und Titelbild sind KI-erzeugt.
+   Klein oben links, von Anfang an sichtbar und bleibt (auch das Schlussbild ist KI-erzeugt). */
+.hero__ki {
+  position: absolute; left: var(--pad-x); top: 16px; margin: 0; z-index: 2;
+  padding: 5px 10px; border-radius: 3px; background: rgba(30,25,18,0.42);
+  font-size: 11px; letter-spacing: 0.08em; color: #F6F0E4; pointer-events: none;
+}
 .hero__marke {
   position: absolute; right: var(--pad-x); bottom: clamp(20px, 3.2vh, 34px);
   display: flex; align-items: center; gap: 10px;
