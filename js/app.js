@@ -132,7 +132,6 @@
       video.addEventListener('ended', function () { pruefeAusschnitt(Infinity); });
     }
 
-
     // Reduced Motion: keinen Video-Zyklus starten, Schriftzug bleibt sichtbar.
     if (prefersReducedMotion) return;
 
@@ -325,6 +324,7 @@
         rafId = requestAnimationFrame(function () {
           rafId = null;
           video.classList.add('is-active');
+          fig.classList.add('is-playing');
         });
       });
 
@@ -332,6 +332,7 @@
         if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
         if (!video) return;
         video.classList.remove('is-active');
+        fig.classList.remove('is-playing');
         video.pause();
       });
     });
