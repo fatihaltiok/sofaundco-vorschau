@@ -105,6 +105,34 @@
     video.loop = false;
     video.pause();
 
+    // E-062: In der Nahen hebt die Frau die VR-Brille über den Kopf. Auf dem Rechner
+    // beschneidet object-fit:cover oben ~170 Videopixel — Kopf und Brille waren weg
+    // (Fatih 03.10.). Nur in diesem Abschnitt (data-ausschnitt="von-bis:Position",
+    // Sekunden) wird der Ausschnitt nach unten geschoben; die Grenzen liegen auf harten
+    // Schnitten, das Umschalten fällt nicht auf. Bildgenau per requestVideoFrameCallback,
+    // sonst über timeupdate. Gilt nur für die Querfassung, nicht für die Handy-Fassung.
+    var ausschnitt = (video.getAttribute('data-ausschnitt') || '').match(/^([\d.]+)-([\d.]+):(.+)$/);
+    if (ausschnitt) {
+      var abT = parseFloat(ausschnitt[1]), bisT = parseFloat(ausschnitt[2]), ausPos = ausschnitt[3];
+      var ausAktiv = false;
+      var pruefeAusschnitt = function (t) {
+        var soll = video.getAttribute('src') === desktopSrc && t >= abT && t < bisT;
+        if (soll !== ausAktiv) { ausAktiv = soll; video.style.objectPosition = soll ? ausPos : ''; }
+      };
+      if ('requestVideoFrameCallback' in video) {
+        var proBild = function (jetzt, meta) {
+          pruefeAusschnitt(meta.mediaTime);
+          video.requestVideoFrameCallback(proBild);
+        };
+        video.requestVideoFrameCallback(proBild);
+      } else {
+        video.addEventListener('timeupdate', function () { pruefeAusschnitt(video.currentTime); });
+      }
+      video.addEventListener('seeked', function () { pruefeAusschnitt(video.currentTime); });
+      video.addEventListener('ended', function () { pruefeAusschnitt(Infinity); });
+    }
+
+
     // Reduced Motion: keinen Video-Zyklus starten, Schriftzug bleibt sichtbar.
     if (prefersReducedMotion) return;
 
