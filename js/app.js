@@ -110,14 +110,18 @@
     // (Fatih 03.10.). Nur in diesem Abschnitt (data-ausschnitt="von-bis:Position",
     // Sekunden) wird der Ausschnitt nach unten geschoben; die Grenzen liegen auf harten
     // Schnitten, das Umschalten fällt nicht auf. Bildgenau per requestVideoFrameCallback,
-    // sonst über timeupdate. Gilt nur für die Querfassung, nicht für die Handy-Fassung.
+    // sonst über timeupdate. Handy-Fassung: data-ausschnitt-mobil (gleiche Zeiten).
     var ausschnitt = (video.getAttribute('data-ausschnitt') || '').match(/^([\d.]+)-([\d.]+):(.+)$/);
     if (ausschnitt) {
       var abT = parseFloat(ausschnitt[1]), bisT = parseFloat(ausschnitt[2]), ausPos = ausschnitt[3];
-      var ausAktiv = false;
+      // Handy-Fassung (Hochkant, gleicher Schnitt): eigene Position aus data-ausschnitt-mobil.
+      var ausPosMobil = video.getAttribute('data-ausschnitt-mobil');
+      var ausAktiv = '';
       var pruefeAusschnitt = function (t) {
-        var soll = video.getAttribute('src') === desktopSrc && t >= abT && t < bisT;
-        if (soll !== ausAktiv) { ausAktiv = soll; video.style.objectPosition = soll ? ausPos : ''; }
+        var src = video.getAttribute('src');
+        var pos = src === desktopSrc ? ausPos : (src === mobilSrc && ausPosMobil ? ausPosMobil : '');
+        var soll = (t >= abT && t < bisT) ? pos : '';
+        if (soll !== ausAktiv) { ausAktiv = soll; video.style.objectPosition = soll; }
       };
       if ('requestVideoFrameCallback' in video) {
         var proBild = function (jetzt, meta) {
