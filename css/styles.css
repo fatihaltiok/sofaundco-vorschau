@@ -250,8 +250,9 @@ em { font-style: italic; }
    läuft), damit es neben dem Sofa & Co-Logo nicht konkurriert. */
 /* E-057: Kennzeichnung nach EU-KI-Verordnung Art. 50 — Video und Titelbild sind KI-erzeugt.
    Klein oben links, von Anfang an sichtbar und bleibt (auch das Schlussbild ist KI-erzeugt). */
+/* E-073 (Andrea 03.10.): untere Bildhälfte — rechts direkt über „roro von brühl“; links unten stößt er mobil an den Knopf. */
 .hero__ki {
-  position: absolute; left: var(--pad-x); top: 16px; margin: 0; z-index: 2;
+  position: absolute; right: var(--pad-x); bottom: calc(clamp(20px, 3.2vh, 34px) + 30px); margin: 0; z-index: 2;
   padding: 5px 10px; border-radius: 3px; background: rgba(30,25,18,0.42);
   font-size: 11px; letter-spacing: 0.08em; color: #F6F0E4; pointer-events: none;
 }
@@ -1094,6 +1095,8 @@ p.body-text:last-of-type { margin-bottom: 32px; }
     background: linear-gradient(0deg, rgba(30,25,18,0.62) 0%, rgba(30,25,18,0.38) 26%, rgba(30,25,18,0) 48%);
   }
   .hero__marke { gap: 8px; }
+  /* E-073: rechts über der Marke stößt der Hinweis an den Knopf — hier links in der Zeile von „roro von brühl“. */
+  .hero__ki { left: var(--pad-x); right: auto; bottom: clamp(20px, 3.2vh, 34px); font-size: 10px; padding: 4px 8px; }
   .hero__marke-text { font-size: 10px; letter-spacing: 0.2em; }
   .hero__marke-logo { height: 14px; }
   .brandband { padding: 18px 0; }
