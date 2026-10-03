@@ -19,6 +19,7 @@
     initLightbox();
     initCollectionToggles();
     initCarousels();
+    initBrandbandMobil();
     initHoverVideo();
     initAmbientVideos();
     initToOverview();
@@ -421,6 +422,51 @@
       window.addEventListener('resize', updateNav);
       updateNav();
     });
+  }
+
+  /* ---------- E-068: Bilderband unter dem Startvideo auf dem Handy (< 600 px) ----------
+     Kein Laufband: wischbar, rastet auf ganzen Kacheln ein (CSS), Pfeil rückt eine Kachel weiter,
+     alle 3,5 s rückt es selbst eine Kachel weiter (am Ende zurück zum Anfang). Pause bei Berührung
+     und 10 s danach; mit „weniger Bewegung“ kein Selbst-Weiterrücken. Ab 600 px passiert hier nichts. */
+  function initBrandbandMobil() {
+    var band = document.querySelector('.brandband');
+    var track = band && band.querySelector('.brandband__track');
+    var next = band && band.querySelector('[data-brandband-next]');
+    if (!track) return;
+    var mq = window.matchMedia('(max-width: 599px)');
+    var pauseUntil = 0;
+
+    function step() {
+      var t = track.querySelectorAll('.brandband__tile');
+      return t.length > 1 ? t[1].offsetLeft - t[0].offsetLeft : track.clientWidth / 3;
+    }
+    function amEnde() { return track.scrollLeft >= track.scrollWidth - track.clientWidth - 2; }
+    function updateNav() {
+      if (next) next.hidden = !mq.matches || amEnde();
+    }
+    function pause(ms) { pauseUntil = Date.now() + ms; }
+
+    if (next) {
+      next.addEventListener('click', function () {
+        pause(10000);
+        track.scrollBy({ left: step(), behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      });
+    }
+    track.addEventListener('scroll', updateNav, { passive: true });
+    window.addEventListener('resize', updateNav);
+    track.addEventListener('touchstart', function () { pause(1e9); }, { passive: true });
+    track.addEventListener('touchend', function () { pause(10000); }, { passive: true });
+    track.addEventListener('touchcancel', function () { pause(10000); }, { passive: true });
+    updateNav();
+
+    if (prefersReducedMotion) return;
+    setInterval(function () {
+      if (!mq.matches || Date.now() < pauseUntil || document.hidden) return;
+      var r = band.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      if (amEnde()) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else track.scrollBy({ left: step(), behavior: 'smooth' });
+    }, 3500);
   }
 
   /* ---------- Knopf „Zur Übersicht" (E-028, R4-1) ----------

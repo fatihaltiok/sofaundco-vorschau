@@ -1099,8 +1099,26 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   .hero__ki { left: var(--pad-x); right: auto; bottom: clamp(20px, 3.2vh, 34px); font-size: 10px; padding: 4px 8px; }
   .hero__marke-text { font-size: 10px; letter-spacing: 0.2em; }
   .hero__marke-logo { height: 14px; }
-  .brandband { padding: 18px 0; }
-  .brandband__tile { width: 140px; height: 140px; margin-right: 10px; }
+  /* E-068 (Andrea Runde 17: „zu angeschnitten“): Rahmen = Seitenverhältnis des Handy-Videos (1080×1228),
+     damit object-fit: cover nichts mehr abschneidet. */
+  .hero__media { height: auto; min-height: 0; aspect-ratio: 1080 / 1228; }
+  /* E-068: Bilderband auf dem Handy — kein Laufband, wischbar mit Einrasten, genau drei ganze Kacheln,
+     links/rechts 10 px Rand wie zwischen den Kacheln. Die zweite Hälfte des Tracks (Duplikate für die
+     Endlosschleife des Laufbands) entfällt hier. Pfeil und Selbst-Weiterrücken: initBrandbandMobil. */
+  .brandband { padding: 18px 0; position: relative; }
+  .brandband__track {
+    width: auto; animation: none; overflow-x: auto; padding: 0 0 0 10px;
+    scroll-snap-type: x mandatory; scroll-padding-left: 10px; scroll-behavior: smooth;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .brandband__track::-webkit-scrollbar { display: none; }
+  .brandband__tile {
+    width: calc((100vw - 40px) / 3); height: calc((100vw - 40px) / 3); margin-right: 10px;
+    scroll-snap-align: start;
+  }
+  .brandband__tile:nth-child(n+18) { display: none; }
+  .brandband__nav:not([hidden]) { display: flex; }
+  .brandband__nav { right: 8px; top: 50%; }
 }
 @media (max-width: 999px) {
   .pillars { grid-template-columns: 1fr; }
@@ -1111,6 +1129,7 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   .brandband__track { animation: none; }
   .brandband { overflow-x: auto; }
 }
+.brandband__nav { display: none; }   /* nur Handy (< 600 px), siehe dort */
 
 /* ---------- R5-1 / E-034: Erster Bildschirm auf dem Rechner (>980 px) ---------- */
 /* Andreas MacBook-Fenster (~1440×800): bisher fraß das 78vh-Video die
