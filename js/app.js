@@ -60,10 +60,9 @@
   }
 
   /* ---------- Hero-Video-Zyklus ----------
-     Kurz nach dem Laden blendet das Video ein und spielt EINMAL komplett durch.
-     Währenddessen ist der "Sofa & Co"-Schriftzug ausgeblendet. Ist das Video
-     durchgelaufen, blendet es langsam zurück zum Standbild und der Schriftzug
-     erscheint — und beides bleibt ruhig stehen (kein erneuter Durchlauf).
+     Kurz nach dem Laden blendet das Video ein. Während des ersten Durchlaufs ist
+     der "Sofa & Co"-Schriftzug ausgeblendet; danach erscheint er und das Video
+     läuft in Dauerschleife weiter (E-069).
      Bei prefers-reduced-motion bleibt das Standbild mit Schriftzug von Anfang an. */
   function initHeroVideo() {
     var video = document.querySelector('[data-hero-video]');
@@ -161,13 +160,15 @@
       }
     }
 
+    // E-069: Dauerschleife. Das Video endet mit einer weichen Rückblende in sein
+    // erstes Bild (Skizze), daher ist der Neustart unsichtbar. Nach dem ersten
+    // Durchlauf blendet der Schriftzug ein und bleibt; das Video läuft darunter weiter.
     function onEnded() {
-      // Video durchgelaufen: zurück zum Standbild, dann Schriftzug einblenden.
-      video.classList.add('is-fading-out');
-      video.classList.remove('is-visible');
-      setTimeout(function () {
-        if (content) content.classList.remove('is-hidden');
-      }, 900);
+      if (content) content.classList.remove('is-hidden');
+      video.loop = true;
+      try { video.currentTime = 0; } catch (e) { /* noop */ }
+      var p = video.play();
+      if (p && typeof p.catch === 'function') p.catch(function () {});
     }
 
     video.addEventListener('ended', onEnded);
