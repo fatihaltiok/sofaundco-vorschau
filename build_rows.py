@@ -21,10 +21,15 @@ Idempotent: mehrfaches Ausführen liefert dasselbe Ergebnis.
 
 import os
 import re
+import sys
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 IMG_ROOT = os.path.join(BASE, "assets", "img", "bruehl")
 INDEX = os.path.join(BASE, "index.html")
+
+# E-083: width/height aus den echten Bilddateien (tools/bildmasse.py)
+sys.path.insert(0, os.path.join(BASE, "..", "tools"))
+from bildmasse import attrs as _masse_attrs  # noqa: E402
 
 IMG_EXT = (".jpg", ".jpeg", ".png", ".webp")
 CURATED_MAX = 8
@@ -250,8 +255,8 @@ def collection_block(row, group, files, soft=False):
         i = idx_of[f] + 1
         alt = "{0} {1} von brühl, Ansicht {2}".format(row, singular, i)
         L.append('            <figure class="product-media {on_soft}gallery-item carousel__item" data-hover-video="">'.format(on_soft=on_soft))
-        L.append('              <img src="{src}" alt="{alt}" loading="lazy">'.format(
-            src=img_path(row, f), alt=alt))
+        L.append('              <img src="{src}" alt="{alt}" loading="lazy"{m}>'.format(
+            src=img_path(row, f), alt=alt, m=_masse_attrs(img_path(row, f), BASE)))
         L.append('            </figure>')
     L.append('          </div>')
     L.append('          <button type="button" class="carousel__nav carousel__nav--next" data-carousel-next="" aria-label="Weitere Bilder">›</button>')
@@ -286,8 +291,8 @@ def collection_block(row, group, files, soft=False):
         for i, f in enumerate(files, 1):
             alt = "{0} {1} von brühl, Ansicht {2}".format(row, singular, i)
             L.append('              <figure class="product-media {on_soft}gallery-item" data-hover-video="">'.format(on_soft=on_soft))
-            L.append('                <img src="{src}" alt="{alt}" loading="lazy">'.format(
-                src=img_path(row, f), alt=alt))
+            L.append('                <img src="{src}" alt="{alt}" loading="lazy"{m}>'.format(
+                src=img_path(row, f), alt=alt, m=_masse_attrs(img_path(row, f), BASE)))
             L.append('              </figure>')
         L.append('            </div>')
         L.append('          </div>')
@@ -425,8 +430,8 @@ def build_section(row, groups):
     if note_pos == "nach_name":
         L.extend(notes)
     L.append('      <figure class="{}" data-hover-video="">'.format(hero_cls))
-    L.append('        <img src="{src}" alt="{alt}" loading="lazy">'.format(
-        src=hero_src, alt=cfg["hero_alt"]))
+    L.append('        <img src="{src}" alt="{alt}" loading="lazy"{m}>'.format(
+        src=hero_src, alt=cfg["hero_alt"], m=_masse_attrs(hero_src, BASE)))
     L.append('      </figure>')
 
     if cfg.get("film"):
