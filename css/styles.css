@@ -1312,10 +1312,11 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   .nav__cta { padding: 10px 14px; }
 }
 
+/* R25: dreizehnter Menüpunkt „Kunst“ — R24-Werte gelten jetzt bis 1499 px (statt 1439 px) */
 /* R24: Menüpunkt „Aufbewahrung“ ist länger als „Stauraum“ — zwischen 1391 und 1439 px noch etwas enger */
-@media (min-width: 1391px) and (max-width: 1439px) {
-  .nav { gap: 4px; }
-  .nav__link { letter-spacing: 0.01em; }
+@media (min-width: 1391px) and (max-width: 1499px) {
+  .nav { gap: 10px; }
+  .nav__link { letter-spacing: 0.01em; font-size: 11.5px; }  /* R25 Nachbesserung 1: kleinere Schrift, dafür sichtbarer Abstand */
 }
 
 /* R23: Piure-Abschnitt „Stauraum“ — Hinweiskasten NUR für die Vorschau (wird im Live-Satz entfernt) */
@@ -1326,3 +1327,23 @@ p.body-text:last-of-type { margin-bottom: 32px; }
 .vorschau-hinweis__titel { margin: 0 0 8px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-gold); }
 .vorschau-hinweis__text { margin: 0 0 18px; font-size: 18px; }
 @media (max-width: 600px) { .vorschau-hinweis { padding: 22px 18px; } }
+
+/* R25 Kunst */
+#kunst .kunst-kopf { aspect-ratio: auto; max-width: 460px; justify-self: center; width: 100%; }
+#kunst .kunst-kopf img { width: 100%; height: auto; object-fit: contain; }
+#kunst .carousel__item.product-media { aspect-ratio: 4 / 5; }
+#kunst .kunst-video { margin: 56px auto 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+#kunst .kunst-video__link { display: flex; flex-direction: column; align-items: center; gap: 16px; text-decoration: none; color: inherit; width: min(400px, 100%); }
+#kunst .kunst-video__link:focus-visible { outline: 3px solid var(--color-gold); outline-offset: 6px; }
+#kunst .kunst-video__bild { position: relative; margin: 0; width: 100%; aspect-ratio: 1018 / 1400; max-height: 70vh; overflow: hidden; background: none; }
+#kunst .kunst-video__bild img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; transition: none; }
+#kunst .kunst-video__bild:hover img { transform: none; }
+#kunst .kunst-video__bild::after { content: ""; position: absolute; left: 50%; top: 50%; width: 72px; height: 72px; margin: -36px 0 0 -36px; border-radius: 50%;
+  background: rgba(30,25,18,0.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'%3E%3Cpath d='M28 22v28l24-14z' fill='%23fff'/%3E%3C/svg%3E") center / 100% 100% no-repeat; transition: background-color .25s ease; pointer-events: none; }
+#kunst .kunst-video__link:hover .kunst-video__bild::after,
+#kunst .kunst-video__link:focus-visible .kunst-video__bild::after { background-color: rgba(30,25,18,0.8); }
+#kunst .kunst-video__hinweis { margin: 0; font-size: 13px; color: var(--color-muted); }
+@media (max-width: 900px) {
+  #kunst .kunst-kopf { aspect-ratio: auto; max-width: 420px; }
+  #kunst .kunst-kopf img { height: auto; object-fit: contain; }
+}
