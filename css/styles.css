@@ -1312,6 +1312,12 @@ p.body-text:last-of-type { margin-bottom: 32px; }
   .nav__cta { padding: 10px 14px; }
 }
 
+/* R24: Menüpunkt „Aufbewahrung“ ist länger als „Stauraum“ — zwischen 1391 und 1439 px noch etwas enger */
+@media (min-width: 1391px) and (max-width: 1439px) {
+  .nav { gap: 4px; }
+  .nav__link { letter-spacing: 0.01em; }
+}
+
 /* R23: Piure-Abschnitt „Stauraum“ — Hinweiskasten NUR für die Vorschau (wird im Live-Satz entfernt) */
 .vorschau-hinweis {
   margin: 48px auto 0; max-width: 640px; padding: 28px 32px; text-align: center;
